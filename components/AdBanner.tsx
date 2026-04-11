@@ -1,13 +1,9 @@
-type Props = {
-  slot?: string
-  height?: number
-  label?: string
-}
+type Props = { height?: number; className?: string }
 
-export default function AdBanner({ height = 90, label = 'Advertisement' }: Props) {
+export default function AdBanner({ height = 90, className = '' }: Props) {
   return (
-    <div className="ad-banner my-6" style={{ height }}>
-      <span>{label}</span>
+    <div className={`ad-banner ${className}`} style={{ height }}>
+      <span>Advertisement</span>
     </div>
   )
 }

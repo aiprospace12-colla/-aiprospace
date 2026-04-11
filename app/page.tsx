@@ -1,86 +1,64 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Pen, Wrench, BookOpen, Box, Code2, Search, Video, Mic, DollarSign } from 'lucide-react'
+import { Wrench, BookOpen, GraduationCap, Download, Zap, TrendingUp, Play, FileText, BookMarked } from 'lucide-react'
+import AdBanner from '@/components/AdBanner'
+import Newsletter from '@/components/Newsletter'
 
 export const metadata: Metadata = {
-  title: 'AIProSpace — AI Tools Reviews & Guides',
-  description: 'In-depth AI tool reviews, automation guides, and strategies to use AI effectively. Updated weekly.',
+  title: 'AIProSpace — AI Tools, Guides & Resources',
+  description: 'Your #1 resource hub for all things AI. Find the best tools, guides, and strategies — curated and reviewed by experts.',
 }
 
-const CATEGORIES = [
-  { icon: Pen,        label: 'Writing & Content', href: '/tools?cat=Writing+%26+Content',  count: 3 },
-  { icon: Box,        label: 'Image Generation',  href: '/tools?cat=Image+Generation',      count: 2 },
-  { icon: Video,      label: 'Video Creation',    href: '/tools?cat=Video+Creation',         count: 1 },
-  { icon: Wrench,     label: 'Automation',        href: '/tools?cat=Automation',             count: 1 },
-  { icon: Code2,      label: 'Coding & Dev',      href: '/tools?cat=Coding+%26+Dev',         count: 1 },
-  { icon: Search,     label: 'Research',          href: '/tools?cat=Research',               count: 1 },
-  { icon: Mic,        label: 'Productivity',      href: '/tools?cat=Productivity',           count: 2 },
-  { icon: DollarSign, label: 'Make Money',        href: '/guides?topic=Make+Money',          count: 2 },
-  { icon: BookOpen,   label: 'Guides',            href: '/guides',                           count: 12 },
-]
-
-const RECENT_POSTS = [
-  { slug: 'best-ai-writing-tools-2026',       title: '10 Best AI Writing Tools in 2026 (Free & Paid)',        date: 'Apr 10, 2026', readTime: '9 min' },
-  { slug: 'chatgpt-vs-claude-vs-gemini-2026', title: 'ChatGPT vs Claude vs Gemini: Full Comparison 2026',     date: 'Apr 7, 2026',  readTime: '12 min' },
-  { slug: 'automate-social-media-n8n-guide',  title: 'How to Automate Social Media with n8n',                  date: 'Apr 3, 2026',  readTime: '10 min' },
-  { slug: 'beginners-guide-ai-tools-2026',    title: "Complete Beginner's Guide to AI Tools in 2026",          date: 'Mar 28, 2026', readTime: '8 min' },
-  { slug: 'use-ai-save-time-productivity',    title: 'How to Use AI to Save 10 Hours Per Week',                date: 'Mar 22, 2026', readTime: '7 min' },
+const CARDS = [
+  { icon: Wrench,        title: 'AI Tools',    desc: 'Find the right tool for any task',        href: '/tools'                   },
+  { icon: BookOpen,      title: 'Blog',         desc: 'Latest AI news & in-depth reviews',       href: '/blog'                    },
+  { icon: GraduationCap, title: 'Guides',       desc: 'Step by step AI tutorials',               href: '/guides'                  },
+  { icon: Download,      title: 'Resources',    desc: 'Free ebooks & cheat sheets',              href: '/resources'               },
+  { icon: Zap,           title: 'Automation',   desc: 'Automate your workflow with AI',          href: '/guides?topic=Automation' },
+  { icon: TrendingUp,    title: 'Make Money',   desc: 'Earn online using AI tools',              href: '/guides?topic=Make+Money' },
+  { icon: Play,          title: 'Courses',      desc: 'Learn from top AI instructors',           href: '/courses'                 },
+  { icon: FileText,      title: 'Cheat Sheets', desc: 'Quick AI reference guides',               href: '/resources'               },
+  { icon: BookMarked,    title: 'Glossary',     desc: 'Understand any AI term instantly',        href: '/glossary'                },
 ]
 
 export default function HomePage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
+    <div className="max-w-4xl mx-auto px-6 py-16">
       {/* Hero */}
-      <div className="max-w-2xl mb-16">
-        <h1 className="text-3xl font-bold text-tx mb-3 leading-tight">
-          The practical guide to AI tools
-        </h1>
-        <p className="text-muted text-base leading-relaxed">
-          Honest reviews, step-by-step guides, and automation workflows — updated weekly.
-          No hype, just what actually works.
+      <div className="text-center mb-12">
+        <div className="flex justify-center mb-5">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-tx">
+            <ellipse cx="12" cy="12" rx="10" ry="4" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-60 12 12)" />
+            <circle cx="19" cy="9" r="1.5" fill="currentColor" stroke="none" />
+          </svg>
+        </div>
+        <h1 className="text-[28px] font-bold text-tx mb-3">Welcome to AIProSpace</h1>
+        <p className="text-base text-muted max-w-[500px] mx-auto leading-relaxed mb-3">
+          Your #1 resource hub for all things AI. Find the best tools, guides, and strategies
+          — curated and reviewed by experts.
         </p>
+        <p className="text-[13px] text-muted">100% free · No affiliate links · Updated weekly</p>
       </div>
 
-      {/* Categories */}
-      <section className="mb-16">
-        <h2 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Browse by category</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-          {CATEGORIES.map(({ icon: Icon, label, href, count }) => (
-            <Link
-              key={label}
-              href={href}
-              className="card flex flex-col gap-3 p-4 rounded-xl"
-            >
-              <Icon size={16} className="text-muted" />
-              <div>
-                <p className="text-sm font-medium text-tx leading-snug">{label}</p>
-                <p className="text-xs text-muted mt-0.5">{count} {count === 1 ? 'item' : 'items'}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <AdBanner height={90} />
 
-      {/* Recent Posts */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xs font-semibold text-muted uppercase tracking-wider">Recent posts</h2>
-          <Link href="/blog" className="text-xs text-muted hover:text-tx transition-colors">View all →</Link>
-        </div>
-        <div>
-          {RECENT_POSTS.map(post => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="post-row block">
-              <div className="flex items-start justify-between gap-4">
-                <p className="post-row-title text-sm font-medium text-tx leading-snug">{post.title}</p>
-                <div className="flex-shrink-0 flex items-center gap-3 text-xs text-muted whitespace-nowrap">
-                  <span>{post.readTime}</span>
-                  <span className="hidden sm:inline">{post.date}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Category grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+        {CARDS.map(({ icon: Icon, title, desc, href }) => (
+          <Link key={title} href={href} className="card group relative p-5">
+            <div className="absolute top-4 right-4 text-muted text-base opacity-0 group-hover:opacity-100 transition-opacity">→</div>
+            <Icon size={20} className="text-tx" />
+            <p className="text-[15px] font-semibold text-tx mt-3 mb-1">{title}</p>
+            <p className="text-[13px] text-muted">{desc}</p>
+          </Link>
+        ))}
+      </div>
+
+      <AdBanner height={90} />
+
+      <Newsletter />
     </div>
   )
 }

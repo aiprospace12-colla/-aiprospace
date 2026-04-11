@@ -2,16 +2,23 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, FileText, Wrench, BookOpen, X } from 'lucide-react'
+import { Search, FileText, Wrench, BookOpen, BookMarked, X } from 'lucide-react'
 import { TOOLS } from '@/data/tools'
 import { GUIDES } from '@/data/guides'
 
 const POSTS = [
-  { slug: 'best-ai-writing-tools-2026',        title: '10 Best AI Writing Tools in 2026 (Free & Paid)',           type: 'Blog' },
-  { slug: 'automate-social-media-n8n-guide',   title: 'How to Automate Social Media with n8n',                   type: 'Blog' },
-  { slug: 'chatgpt-vs-claude-vs-gemini-2026',  title: 'ChatGPT vs Claude vs Gemini: Full Comparison 2026',       type: 'Blog' },
-  { slug: 'beginners-guide-ai-tools-2026',     title: "Complete Beginner's Guide to AI Tools in 2026",           type: 'Blog' },
-  { slug: 'use-ai-save-time-productivity',     title: 'How to Use AI to Save 10 Hours Per Week',                 type: 'Blog' },
+  { slug: 'best-ai-writing-tools-2026',       title: '10 Best AI Writing Tools in 2026'       },
+  { slug: 'automate-social-media-n8n-guide',  title: 'How to Automate Social Media with n8n'  },
+  { slug: 'chatgpt-vs-claude-vs-gemini-2026', title: 'ChatGPT vs Claude vs Gemini 2026'        },
+  { slug: 'beginners-guide-ai-tools-2026',    title: "Complete Beginner's Guide to AI Tools"   },
+  { slug: 'use-ai-save-time-productivity',    title: 'How to Save 10 Hours/Week Using AI'      },
+]
+
+const GLOSSARY = [
+  'Artificial Intelligence', 'Algorithm', 'Automation', 'ChatGPT', 'Claude',
+  'Deep Learning', 'Embedding', 'Fine-tuning', 'GPT', 'Generative AI',
+  'Hallucination', 'LLM', 'Machine Learning', 'Neural Network', 'NLP',
+  'Prompt', 'Prompt Engineering', 'RAG', 'Token', 'Vector Database',
 ]
 
 type Result = { label: string; href: string; type: string }
@@ -25,23 +32,24 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   useEffect(() => { inputRef.current?.focus() }, [])
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
+    const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
   }, [onClose])
 
   const q = query.toLowerCase().trim()
   const results: Result[] = q.length < 2 ? [] : [
     ...POSTS.filter(p => p.title.toLowerCase().includes(q)).slice(0, 3).map(p => ({
-      label: p.title, href: `/blog/${p.slug}`, type: 'Post',
+      label: p.title, href: `/blog/${p.slug}`, type: 'Blog',
     })),
     ...TOOLS.filter(t => t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)).slice(0, 3).map(t => ({
       label: t.name, href: `/tools/${t.slug}`, type: 'Tool',
     })),
-    ...GUIDES.filter(g => g.title.toLowerCase().includes(q)).slice(0, 3).map(g => ({
+    ...GUIDES.filter(g => g.title.toLowerCase().includes(q)).slice(0, 2).map(g => ({
       label: g.title, href: `/guides/${g.slug}`, type: 'Guide',
+    })),
+    ...GLOSSARY.filter(term => term.toLowerCase().includes(q)).slice(0, 2).map(term => ({
+      label: term, href: `/glossary#${term.toLowerCase().replace(/\s+/g, '-')}`, type: 'Glossary',
     })),
   ]
 
@@ -54,15 +62,15 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   }
 
   const icon = (type: string) => {
-    if (type === 'Post') return <FileText size={13} className="text-muted flex-shrink-0" />
-    if (type === 'Tool') return <Wrench size={13} className="text-muted flex-shrink-0" />
-    return <BookOpen size={13} className="text-muted flex-shrink-0" />
+    if (type === 'Blog')    return <FileText   size={13} className="text-muted flex-shrink-0" />
+    if (type === 'Tool')    return <Wrench     size={13} className="text-muted flex-shrink-0" />
+    if (type === 'Guide')   return <BookOpen   size={13} className="text-muted flex-shrink-0" />
+    return                         <BookMarked size={13} className="text-muted flex-shrink-0" />
   }
 
   return (
     <div className="search-overlay" onClick={onClose}>
       <div className="search-box mx-4" onClick={e => e.stopPropagation()}>
-        {/* Input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
           <Search size={15} className="text-muted flex-shrink-0" />
           <input
@@ -70,7 +78,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
             value={query}
             onChange={e => setQuery(e.target.value)}
             onKeyDown={handleKey}
-            placeholder="Search posts, tools, guides..."
+            placeholder="Search tools, posts, guides..."
             className="flex-1 bg-transparent outline-none text-sm text-tx placeholder:text-muted"
           />
           {query && (
@@ -81,7 +89,6 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           <kbd className="text-[10px] text-muted border border-border rounded px-1.5 py-0.5">ESC</kbd>
         </div>
 
-        {/* Results */}
         {results.length > 0 ? (
           <ul className="py-2 max-h-80 overflow-y-auto">
             {results.map((r, i) => (
@@ -89,9 +96,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
                 <button
                   onClick={() => { router.push(r.href); onClose() }}
                   onMouseEnter={() => setSelected(i)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
-                    i === selected ? 'bg-hover' : ''
-                  }`}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${i === selected ? 'bg-hover' : ''}`}
                 >
                   {icon(r.type)}
                   <span className="text-sm text-tx flex-1 truncate">{r.label}</span>
