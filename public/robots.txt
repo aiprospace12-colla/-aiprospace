@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://aiprospace.com
+
+# Sitemaps
+Sitemap: https://aiprospace.com/sitemap.xml
