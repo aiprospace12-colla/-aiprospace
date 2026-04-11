@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://aiprospace.com'),
   title: { default: 'AIProSpace — AI Tools, Guides & Resources', template: '%s | AIProSpace' },
   description: 'Your #1 resource hub for AI tools, guides, and strategies. Find the best AI tools reviewed and curated by experts.',
+  verification: {
+    google: 'Yml5E2bkHbji8WfFrAgzgmltXC2zkJ2UyH70Z57xN4A',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
