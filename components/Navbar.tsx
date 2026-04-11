@@ -1,128 +1,105 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import ThemeToggle from './ThemeToggle'
+import SearchModal from './SearchModal'
+import { Search, Menu, X } from 'lucide-react'
 
-const navLinks = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/tools', label: 'Tools' },
+const NAV = [
+  { href: '/',          label: 'Home'      },
+  { href: '/blog',      label: 'Blog'      },
+  { href: '/tools',     label: 'Tools'     },
+  { href: '/guides',    label: 'Guides'    },
   { href: '/resources', label: 'Resources' },
-  { href: '/about', label: 'About' },
 ]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
   }, [])
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={
-        scrolled
-          ? {
-              background: 'var(--navbar-bg)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              borderBottom: '1px solid var(--border)',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.15)',
-            }
-          : undefined
-      }
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+    <>
+      <header className="sticky top-0 z-40 bg-bg border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between gap-4">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1">
-            <span className="text-xl font-extrabold tracking-tight" style={{ fontFamily: 'Syne, sans-serif' }}>
-              <span style={{ color: 'var(--primary)' }}>AI</span>
-              <span style={{ color: 'var(--text-primary)' }}>ProSpace</span>
-            </span>
+          <Link href="/" className="flex-shrink-0 font-bold text-sm text-tx">
+            AIProSpace
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium transition-colors duration-200 relative group"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {link.label}
-                <span
-                  className="absolute -bottom-1 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full"
-                  style={{ background: 'var(--primary)' }}
-                />
-              </Link>
-            ))}
-          </div>
+          {/* Center nav — desktop */}
+          <nav className="hidden md:flex items-center gap-0.5">
+            {NAV.map(({ href, label }) => {
+              const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
+              return (
+                <Link key={href} href={href} className={`nav-item ${active ? 'active' : ''}`}>
+                  {label}
+                </Link>
+              )
+            })}
+          </nav>
 
-          {/* Right side */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <Link href="/resources" className="btn-primary text-sm">
-              Get Free eBook
-            </Link>
-          </div>
-
-          {/* Mobile: theme toggle + hamburger */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Right — search + theme */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="hidden md:flex items-center gap-2 px-3 h-7 rounded-md border border-border bg-card text-muted text-xs hover:border-muted transition-colors"
+            >
+              <Search size={12} />
+              <span>Search</span>
+              <span className="ml-2 text-[10px] opacity-50">Ctrl K</span>
+            </button>
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="md:hidden flex items-center justify-center w-7 h-7 rounded-md text-muted hover:text-tx hover:bg-hover"
+            >
+              <Search size={15} />
+            </button>
             <ThemeToggle />
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex flex-col justify-center items-center w-8 h-8 gap-[5px]"
-              aria-label="Toggle menu"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden flex items-center justify-center w-7 h-7 rounded-md text-muted hover:text-tx hover:bg-hover"
             >
-              <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} style={{ background: 'var(--text-primary)' }} />
-              <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`} style={{ background: 'var(--text-primary)' }} />
-              <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} style={{ background: 'var(--text-primary)' }} />
+              {mobileOpen ? <X size={15} /> : <Menu size={15} />}
             </button>
           </div>
         </div>
 
         {/* Mobile menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="glass rounded-2xl mb-4 p-6 flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-medium transition-colors text-lg"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+        {mobileOpen && (
+          <div className="md:hidden border-t border-border bg-bg px-4 py-3 flex flex-col gap-1">
+            {NAV.map(({ href, label }) => {
+              const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
+              return (
                 <Link
-                  href="/resources"
-                  onClick={() => setIsOpen(false)}
-                  className="btn-primary text-sm text-center mt-2"
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`nav-item w-full ${active ? 'active' : ''}`}
                 >
-                  Get Free eBook
+                  {label}
                 </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-    </header>
+              )
+            })}
+          </div>
+        )}
+      </header>
+
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
+    </>
   )
 }

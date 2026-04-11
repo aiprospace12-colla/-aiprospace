@@ -1,0 +1,106 @@
+---
+title: "How to Automate Social Media with n8n"
+excerpt: "Build a workflow that generates, schedules, and posts content to multiple platforms automatically — using n8n and AI."
+date: "2026-04-03"
+category: "Automation"
+tags: ["n8n", "automation", "social media", "ChatGPT"]
+author: "AIProSpace Team"
+thumbnail: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1200&auto=format&fit=crop&q=80"
+---
+
+Manual social media posting is a time sink. This guide shows you how to build an n8n workflow that automatically generates content with AI, formats it for each platform, and publishes on a schedule — with zero manual work after setup.
+
+## What You'll Build
+
+By the end of this guide, you'll have a workflow that:
+
+1. Triggers on a schedule (e.g., Monday, Wednesday, Friday at 9am)
+2. Picks a topic from a spreadsheet or Airtable
+3. Generates platform-specific content with ChatGPT
+4. Posts to Twitter/X, LinkedIn, and Instagram simultaneously
+5. Logs each post in a Google Sheet
+
+## Prerequisites
+
+- An n8n account (free self-hosted or cloud trial)
+- OpenAI API key (ChatGPT)
+- Social media accounts with API access
+
+## Step 1: Set Up Your Topic Source
+
+Create a Google Sheet or Airtable database with columns:
+- **Topic** (e.g., "AI productivity tips")
+- **Status** (pending / published)
+- **Date published**
+
+n8n will pull from the "pending" rows and mark them published after posting.
+
+## Step 2: Create the Schedule Trigger
+
+In n8n, add a **Schedule Trigger** node. Set it to run on the days and times you want to publish. For most businesses, Monday/Wednesday/Friday at 9am works well.
+
+## Step 3: Fetch Your Next Topic
+
+Add a **Google Sheets** node (or Airtable node). Configure it to:
+- Read from your topics spreadsheet
+- Filter rows where Status = "pending"
+- Return the first result
+
+## Step 4: Generate Content with ChatGPT
+
+Add an **OpenAI** node. Use this prompt structure:
+
+```
+You are a social media expert. Create content for the following topic: {{topic}}
+
+Generate three versions:
+1. Twitter/X post (max 280 characters, punchy, includes 2-3 hashtags)
+2. LinkedIn post (professional tone, 150-200 words, value-focused)
+3. Instagram caption (engaging, 3-4 sentences, includes relevant hashtags)
+
+Return as JSON with keys: twitter, linkedin, instagram
+```
+
+## Step 5: Parse the AI Response
+
+Add a **Code** node to parse the JSON response from ChatGPT and split it into separate variables for each platform.
+
+## Step 6: Post to Each Platform
+
+Add three parallel branches:
+
+**Twitter/X:** Use the Twitter node or HTTP Request node with the Twitter API v2.
+
+**LinkedIn:** Use the LinkedIn node. Personal profiles require OAuth — for business pages, use the LinkedIn Marketing API.
+
+**Instagram:** Use the Facebook Graph API (Instagram Basic Display API doesn't support posting — you need the Graph API with a Business account).
+
+## Step 7: Update Your Topic Tracker
+
+After successful posting, add a **Google Sheets** node to:
+- Update the Status column to "published"
+- Write today's date to the Date Published column
+
+## Step 8: Error Handling
+
+Add an **Error Trigger** node and connect it to an email or Slack notification so you know when posts fail. n8n makes this easy with the built-in error workflow feature.
+
+## The Full Workflow
+
+Your complete workflow should look like:
+Schedule → Get Topic → Generate with ChatGPT → Parse JSON → [Post to Twitter | Post to LinkedIn | Post to Instagram] → Update Sheet
+
+## Scaling Up
+
+Once this is running, you can extend it to:
+- **Generate images** with DALL-E or Midjourney and attach them to posts
+- **Pull trending topics** from Google Trends or Twitter trending to inform your content
+- **A/B test captions** by generating two versions and tracking engagement
+
+## Tips for Better Results
+
+- Keep your topic list specific. "5 ways AI saves time in project management" generates better content than "AI productivity."
+- Review AI-generated content weekly and refine your prompts based on what performs best.
+- Use the n8n error log to spot API rate limits before they disrupt your posting schedule.
+
+With this setup running, you can maintain an active social media presence with about 30 minutes of work per month — just maintaining the topic list.
