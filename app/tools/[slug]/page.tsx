@@ -1,154 +1,185 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ExternalLink, Check, X, ChevronLeft, Layers } from 'lucide-react'
-import { TOOLS } from '@/data/tools'
+import { TOOL_CATEGORIES, SIDEBAR_POPULAR, SIDEBAR_MORE } from '@/data/tools'
 import AdBanner from '@/components/AdBanner'
 
 type Props = { params: { slug: string } }
 
-export function generateStaticParams() {
-  return TOOLS.map(t => ({ slug: t.slug }))
+export async function generateStaticParams() {
+  return TOOL_CATEGORIES.map(c => ({ slug: c.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tool = TOOLS.find(t => t.slug === params.slug)
-  if (!tool) return {}
-  return { title: `${tool.name} Review 2026`, description: tool.description }
+  const cat = TOOL_CATEGORIES.find(c => c.slug === params.slug)
+  if (!cat) return {}
+  return {
+    title: cat.metaTitle,
+    description: cat.metaDescription,
+    alternates: { canonical: `https://aiprospace.com/tools/${cat.slug}` },
+    openGraph: { title: cat.metaTitle, description: cat.metaDescription, url: `https://aiprospace.com/tools/${cat.slug}` },
+  }
 }
 
-const STARS: Record<number, string> = { 5: '★★★★★', 4: '★★★★☆', 3: '★★★☆☆' }
+export default function ToolCategoryPage({ params }: Props) {
+  const cat = TOOL_CATEGORIES.find(c => c.slug === params.slug)
+  if (!cat) notFound()
 
-export default function ToolPage({ params }: Props) {
-  const tool = TOOLS.find(t => t.slug === params.slug)
-  if (!tool) notFound()
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: cat.h1,
+    numberOfItems: cat.tools.length,
+    itemListElement: cat.tools.map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.name,
+      url: t.url,
+    })),
+  }
 
-  const similar = TOOLS.filter(t => t.slug !== params.slug && t.category === tool.category).slice(0, 3)
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: cat.faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
 
   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 flex-shrink-0 border-r border-border px-3 py-5 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <p className="text-base font-bold text-tx px-3 mb-3">AI Tools</p>
-        <div className="divider mb-4" />
-        <span className="sidebar-label mb-2">NAVIGATION</span>
-        <div className="flex flex-col gap-0.5 mb-5">
-          <Link href="/tools" className="sidebar-item"><Layers size={16} />All Tools</Link>
-        </div>
-        {similar.length > 0 && (
-          <>
-            <span className="sidebar-label mb-2">SIMILAR TOOLS</span>
-            <div className="flex flex-col gap-0.5">
-              {TOOLS.filter(t => t.category === tool.category && t.slug !== tool.slug).slice(0, 6).map(t => (
-                <Link key={t.slug} href={`/tools/${t.slug}`} className="sidebar-item text-[13px]">
-                  <span className="w-5 h-5 rounded bg-card border border-border flex items-center justify-center text-[10px] font-bold flex-shrink-0">
-                    {t.logo.slice(0, 1)}
-                  </span>
-                  {t.name}
-                </Link>
-              ))}
-            </div>
-          </>
-        )}
-      </aside>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      {/* Main */}
-      <div className="flex-1 px-8 py-8 max-w-3xl">
-        <Link href="/tools" className="inline-flex items-center gap-1 text-[12px] text-muted hover:text-tx transition-colors mb-6">
-          <ChevronLeft size={13} />Back to Tools
-        </Link>
+      <div style={{ display: 'flex' }}>
+        {/* Sidebar */}
+        <aside style={{
+          width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+          padding: '20px 12px', position: 'sticky', top: 97,
+          height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+        }} className="hidden md:block">
+          <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Tools</p>
+          <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
 
-        {/* Header */}
-        <div className="flex items-start gap-4 mb-6 pb-6 border-b border-border">
-          <div className="w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center font-bold text-lg text-tx flex-shrink-0">
-            {tool.logo.slice(0, 2)}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-1">
-              <h1 className="text-2xl font-bold text-tx">{tool.name}</h1>
-              <span className="badge">{tool.category}</span>
-              <span className={tool.price === 'Free' ? 'badge badge-free' : 'badge'}>{tool.price}</span>
-            </div>
-            <p className="text-sm text-muted">{tool.description}</p>
-            <p className="text-yellow-500 mt-2 text-sm">{STARS[tool.rating] ?? '★★★★☆'}</p>
-          </div>
-          <a href={tool.url} target="_blank" rel="noopener noreferrer nofollow" className="btn btn-primary flex-shrink-0 gap-1.5">
-            Visit <ExternalLink size={12} />
-          </a>
-        </div>
-
-        <AdBanner height={90} />
-
-        <div className="mt-6 space-y-8">
-          <div>
-            <h2 className="text-lg font-bold text-tx mb-3">Overview</h2>
-            <p className="text-sm text-muted leading-relaxed">{tool.longDescription}</p>
+          <span className="sidebar-label" style={{ marginBottom: 6 }}>POPULAR TOOLS</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 24 }}>
+            {SIDEBAR_POPULAR.map(item => (
+              <Link key={item.slug} href={`/tools/${item.slug}`}
+                className={`sidebar-item${params.slug === item.slug ? ' active' : ''}`}>
+                {item.label}
+              </Link>
+            ))}
           </div>
 
-          <div>
-            <h2 className="text-lg font-bold text-tx mb-3">Key Features</h2>
-            <ul className="grid sm:grid-cols-2 gap-2">
-              {tool.features.map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm text-muted">
-                  <Check size={13} className="text-tx flex-shrink-0" />{f}
-                </li>
-              ))}
-            </ul>
+          <span className="sidebar-label" style={{ marginBottom: 6 }}>MORE TOOLS</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {SIDEBAR_MORE.map(item => (
+              <Link key={item.slug} href={`/tools/${item.slug}`}
+                className={`sidebar-item${params.slug === item.slug ? ' active' : ''}`}>
+                {item.label}
+              </Link>
+            ))}
           </div>
+        </aside>
 
-          <div>
-            <h2 className="text-lg font-bold text-tx mb-2">Best For</h2>
-            <p className="text-sm text-muted">{tool.bestFor}</p>
-          </div>
+        {/* Main */}
+        <div style={{ flex: 1, padding: 40, maxWidth: 860, minWidth: 0 }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 12 }}>
+            By AIProSpace Team · Updated Apr 2026
+          </p>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.3 }}>{cat.h1}</h1>
+          <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 24, lineHeight: 1.7 }}>{cat.intro}</p>
 
-          <div>
-            <h2 className="text-lg font-bold text-tx mb-3">Pros &amp; Cons</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="border border-border rounded-lg p-4">
-                <p className="text-xs font-semibold text-tx uppercase tracking-wide mb-3">Pros</p>
-                <ul className="space-y-2">
-                  {tool.pros.map(p => (
-                    <li key={p} className="flex items-start gap-2 text-sm text-muted">
-                      <Check size={12} className="text-tx mt-0.5 flex-shrink-0" />{p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="border border-border rounded-lg p-4">
-                <p className="text-xs font-semibold text-tx uppercase tracking-wide mb-3">Cons</p>
-                <ul className="space-y-2">
-                  {tool.cons.map(c => (
-                    <li key={c} className="flex items-start gap-2 text-sm text-muted">
-                      <X size={12} className="text-muted mt-0.5 flex-shrink-0" />{c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
+          <AdBanner />
 
-          {similar.length > 0 && (
-            <div>
-              <h2 className="text-lg font-bold text-tx mb-3">Similar Tools</h2>
-              <div className="grid sm:grid-cols-3 gap-3">
-                {similar.map(t => (
-                  <Link key={t.slug} href={`/tools/${t.slug}`} className="card p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-7 h-7 rounded bg-hover border border-border flex items-center justify-center text-xs font-bold text-tx">
-                        {t.logo.slice(0, 1)}
-                      </span>
-                      <span className="text-sm font-semibold text-tx">{t.name}</span>
-                    </div>
-                    <p className="text-xs text-muted line-clamp-2">{t.description}</p>
-                  </Link>
+          {/* Tools table */}
+          <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', margin: '28px 0 14px' }}>
+            Best {cat.label} Tools
+          </h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tool</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cat.tools.map((tool, i) => (
+                  <tr key={tool.name}>
+                    <td>{i + 1}</td>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`https://www.google.com/s2/favicons?domain=${tool.domain}&sz=32`}
+                          alt={`${tool.name} logo`}
+                          width={24} height={24}
+                          style={{ borderRadius: 4, flexShrink: 0 }}
+                        />
+                        <div>
+                          <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                            className="tool-link"
+                          >
+                            {tool.name} ↗
+                          </a>
+                          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{tool.description.slice(0, 80)}…</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span className="badge">{tool.type}</span></td>
+                  </tr>
                 ))}
-              </div>
-            </div>
-          )}
-        </div>
+              </tbody>
+            </table>
+          </div>
 
-        <AdBanner height={90} />
+          {/* Tool detail sections */}
+          {cat.tools.map((tool, i) => (
+            <div key={tool.name} style={{ marginTop: 40, paddingTop: 32, borderTop: i === 0 ? '1px solid var(--border)' : 'none' }}>
+              {i > 0 && <div style={{ height: 1, background: 'var(--border)', marginBottom: 32 }} />}
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>
+                {i + 1}.{' '}
+                <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                  style={{ color: 'var(--text)', textDecoration: 'none' }}>
+                  {tool.name} ↗
+                </a>
+              </h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`https://www.google.com/s2/favicons?domain=${tool.domain}&sz=64`} alt={`${tool.name} logo`} width={32} height={32} style={{ borderRadius: 6 }} />
+                <span className="badge">{tool.type}</span>
+                <span className="badge">{tool.pricing}</span>
+              </div>
+              <p style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.75, marginBottom: 12 }}>{tool.description}</p>
+            </div>
+          ))}
+
+          <div style={{ marginTop: 40 }}><AdBanner /></div>
+
+          {/* FAQ */}
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: '40px 0 16px' }}>
+            Frequently Asked Questions
+          </h2>
+          <div>
+            {cat.faqs.map(faq => (
+              <FaqItem key={faq.q} q={faq.q} a={faq.a} />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
+  )
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  return (
+    <details className="faq-item" style={{ cursor: 'pointer' }}>
+      <summary className="faq-question">{q}</summary>
+      <p className="faq-answer">{a}</p>
+    </details>
   )
 }

@@ -1,62 +1,52 @@
 import type { Metadata } from 'next'
-import { Grid, Book, FileText, Layout, Hash, FileDown } from 'lucide-react'
-import { RESOURCES } from '@/data/resources'
+import Link from 'next/link'
+import { RESOURCES, RESOURCE_TYPES } from '@/data/resources'
+import AdBanner from '@/components/AdBanner'
 
 export const metadata: Metadata = {
-  title: 'Free Resources',
-  description: 'Free AI cheat sheets, ebooks, templates, and prompt libraries. No email required.',
+  title: 'Free AI Resources — Ebooks, Cheat Sheets & Templates',
+  description: 'Download free AI resources including ebooks, cheat sheets, prompt libraries and templates. No email required.',
+  alternates: { canonical: 'https://aiprospace.com/resources' },
+  openGraph: { title: 'Free AI Resources — Ebooks, Cheat Sheets & Templates', description: 'Free AI resources — no email required.' },
 }
-
-const SIDEBAR = [
-  { icon: Grid,     label: 'All Resources'   },
-  { icon: Book,     label: 'eBooks'          },
-  { icon: FileText, label: 'Cheat Sheets'    },
-  { icon: Layout,   label: 'Templates'       },
-  { icon: Hash,     label: 'Prompt Libraries'},
-]
 
 export default function ResourcesPage() {
   return (
-    <div className="flex">
+    <div style={{ display: 'flex' }}>
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 flex-shrink-0 border-r border-border px-3 py-5 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <p className="text-base font-bold text-tx px-3 mb-3">Resources</p>
-        <div className="divider mb-4" />
-        <span className="sidebar-label mb-2">BY TYPE</span>
-        <div className="flex flex-col gap-0.5">
-          {SIDEBAR.map(({ icon: Icon, label }) => (
-            <button key={label} className="sidebar-item">
-              <Icon size={16} />{label}
-            </button>
+      <aside style={{
+        width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+        padding: '20px 12px', position: 'sticky', top: 97,
+        height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+      }} className="hidden md:block">
+        <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Resources</p>
+        <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+        <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TYPE</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {RESOURCE_TYPES.map(type => (
+            <Link key={type} href="/resources" className={`sidebar-item${type === 'All' ? ' active' : ''}`}>
+              {type === 'All' ? 'All Resources' : type}
+            </Link>
           ))}
         </div>
       </aside>
 
       {/* Main */}
-      <div className="flex-1 px-8 py-8 max-w-3xl">
-        <h1 className="text-2xl font-bold text-tx mb-1">Resources</h1>
-        <p className="text-sm text-muted mb-8">Free downloads — no email required</p>
+      <div style={{ flex: 1, padding: 40, maxWidth: 860, minWidth: 0 }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>Free Resources</h1>
+        <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 24 }}>Download free — no email required</p>
 
-        <div>
-          {RESOURCES.map((resource, i) => (
-            <div
-              key={resource.id}
-              className={`flex items-start gap-4 py-5 ${i < RESOURCES.length - 1 ? 'border-b border-border' : ''}`}
-            >
-              <FileDown size={20} className="text-muted flex-shrink-0 mt-0.5" />
-              <div className="flex-1 min-w-0">
-                <p className="text-[15px] font-semibold text-tx">{resource.title}</p>
-                <p className="text-[13px] text-muted mt-0.5 leading-snug">{resource.description}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="badge">{resource.format}</span>
-                  <span className="text-[11px] text-muted">{resource.pages}</span>
-                </div>
+        <AdBanner />
+
+        <div style={{ marginTop: 24 }}>
+          {RESOURCES.map(resource => (
+            <div key={resource.id} className="resource-row">
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>{resource.title}</p>
+                <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.5 }}>{resource.description}</p>
+                <span className="badge" style={{ marginTop: 8 }}>{resource.type}</span>
               </div>
-              <a
-                href={resource.downloadUrl}
-                download
-                className="btn flex-shrink-0 text-[13px] whitespace-nowrap"
-              >
+              <a href={resource.url} className="btn btn-primary" style={{ flexShrink: 0 }}>
                 Download Free →
               </a>
             </div>

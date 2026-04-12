@@ -2,24 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, FileText, Wrench, BookOpen, BookMarked, X } from 'lucide-react'
-import { TOOLS } from '@/data/tools'
+import { Search, X } from 'lucide-react'
+import { TOOL_CATEGORIES } from '@/data/tools'
 import { GUIDES } from '@/data/guides'
-
-const POSTS = [
-  { slug: 'best-ai-writing-tools-2026',       title: '10 Best AI Writing Tools in 2026'       },
-  { slug: 'automate-social-media-n8n-guide',  title: 'How to Automate Social Media with n8n'  },
-  { slug: 'chatgpt-vs-claude-vs-gemini-2026', title: 'ChatGPT vs Claude vs Gemini 2026'        },
-  { slug: 'beginners-guide-ai-tools-2026',    title: "Complete Beginner's Guide to AI Tools"   },
-  { slug: 'use-ai-save-time-productivity',    title: 'How to Save 10 Hours/Week Using AI'      },
-]
-
-const GLOSSARY = [
-  'Artificial Intelligence', 'Algorithm', 'Automation', 'ChatGPT', 'Claude',
-  'Deep Learning', 'Embedding', 'Fine-tuning', 'GPT', 'Generative AI',
-  'Hallucination', 'LLM', 'Machine Learning', 'Neural Network', 'NLP',
-  'Prompt', 'Prompt Engineering', 'RAG', 'Token', 'Vector Database',
-]
+import { GLOSSARY } from '@/data/glossary'
+import { POSTS } from '@/data/blog'
 
 type Result = { label: string; href: string; type: string }
 
@@ -30,7 +17,6 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => { inputRef.current?.focus() }, [])
-
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', h)
@@ -38,18 +24,21 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   }, [onClose])
 
   const q = query.toLowerCase().trim()
+
+  const allTools = TOOL_CATEGORIES.flatMap(cat =>
+    cat.tools.map(t => ({ label: t.name, href: `/tools/${cat.slug}`, type: 'Tool' }))
+  )
+
   const results: Result[] = q.length < 2 ? [] : [
     ...POSTS.filter(p => p.title.toLowerCase().includes(q)).slice(0, 3).map(p => ({
       label: p.title, href: `/blog/${p.slug}`, type: 'Blog',
     })),
-    ...TOOLS.filter(t => t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)).slice(0, 3).map(t => ({
-      label: t.name, href: `/tools/${t.slug}`, type: 'Tool',
-    })),
+    ...allTools.filter(t => t.label.toLowerCase().includes(q)).slice(0, 3),
     ...GUIDES.filter(g => g.title.toLowerCase().includes(q)).slice(0, 2).map(g => ({
       label: g.title, href: `/guides/${g.slug}`, type: 'Guide',
     })),
-    ...GLOSSARY.filter(term => term.toLowerCase().includes(q)).slice(0, 2).map(term => ({
-      label: term, href: `/glossary#${term.toLowerCase().replace(/\s+/g, '-')}`, type: 'Glossary',
+    ...GLOSSARY.filter(g => g.term.toLowerCase().includes(q)).slice(0, 2).map(g => ({
+      label: g.term, href: `/glossary#${g.id}`, type: 'Glossary',
     })),
   ]
 
@@ -61,54 +50,52 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
     if (e.key === 'Enter' && results[selected]) { router.push(results[selected].href); onClose() }
   }
 
-  const icon = (type: string) => {
-    if (type === 'Blog')    return <FileText   size={13} className="text-muted flex-shrink-0" />
-    if (type === 'Tool')    return <Wrench     size={13} className="text-muted flex-shrink-0" />
-    if (type === 'Guide')   return <BookOpen   size={13} className="text-muted flex-shrink-0" />
-    return                         <BookMarked size={13} className="text-muted flex-shrink-0" />
+  const typeColor = (type: string) => {
+    const map: Record<string, string> = { Blog: '#888', Tool: '#888', Guide: '#888', Glossary: '#888' }
+    return map[type] || '#888'
   }
 
   return (
     <div className="search-overlay" onClick={onClose}>
-      <div className="search-box mx-4" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
-          <Search size={15} className="text-muted flex-shrink-0" />
+      <div className="search-box" style={{ margin: '0 16px' }} onClick={e => e.stopPropagation()}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid var(--border)' }}>
+          <Search size={14} style={{ color: 'var(--muted)', flexShrink: 0 }} />
           <input
             ref={inputRef}
             value={query}
             onChange={e => setQuery(e.target.value)}
             onKeyDown={handleKey}
-            placeholder="Search tools, posts, guides..."
-            className="flex-1 bg-transparent outline-none text-sm text-tx placeholder:text-muted"
+            placeholder="Search tools, posts, guides, glossary..."
+            style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 14, color: 'var(--text)', fontFamily: 'inherit' }}
           />
-          {query && (
-            <button onClick={() => setQuery('')} className="text-muted hover:text-tx">
-              <X size={13} />
-            </button>
-          )}
-          <kbd className="text-[10px] text-muted border border-border rounded px-1.5 py-0.5">ESC</kbd>
+          {query
+            ? <button onClick={() => setQuery('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex' }}><X size={13} /></button>
+            : <span style={{ fontSize: 11, border: '1px solid var(--border)', borderRadius: 4, padding: '1px 5px', color: 'var(--muted)' }}>ESC</span>
+          }
         </div>
-
         {results.length > 0 ? (
-          <ul className="py-2 max-h-80 overflow-y-auto">
+          <ul style={{ listStyle: 'none', padding: '6px 0', maxHeight: 320, overflowY: 'auto' }}>
             {results.map((r, i) => (
-              <li key={r.href}>
+              <li key={r.href + i}>
                 <button
                   onClick={() => { router.push(r.href); onClose() }}
                   onMouseEnter={() => setSelected(i)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${i === selected ? 'bg-hover' : ''}`}
+                  style={{
+                    width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '9px 16px', background: i === selected ? 'var(--hover-bg)' : 'none',
+                    border: 'none', cursor: 'pointer', textAlign: 'left',
+                  }}
                 >
-                  {icon(r.type)}
-                  <span className="text-sm text-tx flex-1 truncate">{r.label}</span>
-                  <span className="text-[10px] text-muted border border-border rounded px-1.5 py-0.5 flex-shrink-0">{r.type}</span>
+                  <span style={{ flex: 1, fontSize: 13, color: 'var(--text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.label}</span>
+                  <span style={{ fontSize: 10, color: typeColor(r.type), border: '1px solid var(--border)', borderRadius: 100, padding: '1px 7px', flexShrink: 0 }}>{r.type}</span>
                 </button>
               </li>
             ))}
           </ul>
         ) : query.length >= 2 ? (
-          <p className="px-4 py-6 text-sm text-muted text-center">No results for &quot;{query}&quot;</p>
+          <p style={{ padding: '24px 16px', fontSize: 13, color: 'var(--muted)', textAlign: 'center' }}>No results for &quot;{query}&quot;</p>
         ) : (
-          <p className="px-4 py-6 text-xs text-muted text-center">Type at least 2 characters to search</p>
+          <p style={{ padding: '24px 16px', fontSize: 12, color: 'var(--muted)', textAlign: 'center' }}>Type at least 2 characters to search</p>
         )}
       </div>
     </div>

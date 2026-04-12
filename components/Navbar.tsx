@@ -23,59 +23,59 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const h = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault()
         setSearchOpen(true)
       }
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
   }, [])
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-bg border-b border-border">
-        {/* Top row: logo + search + right actions */}
-        <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-4">
+      <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
+        {/* Top row */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56, padding: '0 24px', maxWidth: 1400, margin: '0 auto' }}>
           <Logo />
-
-          {/* Center search */}
-          <div className="flex-1 flex justify-center">
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 w-full max-w-md h-9 px-3 rounded-md border border-border bg-card text-muted text-sm hover:border-muted transition-colors text-left"
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                background: 'var(--card-bg)', border: '1px solid var(--border)',
+                borderRadius: 6, padding: '0 12px', height: 34,
+                width: '100%', maxWidth: 400, cursor: 'pointer',
+                fontSize: 13, color: 'var(--muted)', textAlign: 'left',
+              }}
             >
-              <Search size={14} className="flex-shrink-0" />
-              <span className="flex-1 text-left">Search...</span>
-              <kbd className="text-[10px] border border-border rounded px-1.5 py-0.5 bg-bg text-muted">Ctrl K</kbd>
+              <Search size={13} style={{ flexShrink: 0 }} />
+              <span style={{ flex: 1 }}>Search...</span>
+              <span style={{ fontSize: 11, border: '1px solid var(--border)', borderRadius: 4, padding: '1px 5px', background: 'var(--bg)', color: 'var(--muted)' }}>⌘K</span>
             </button>
           </div>
-
-          {/* Right */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Link href="/blog" className="hidden sm:block text-sm text-muted hover:text-tx transition-colors whitespace-nowrap">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+            <Link href="/blog" style={{ fontSize: 13, color: 'var(--muted)', whiteSpace: 'nowrap' }}>
               Newsletter ›
             </Link>
             <ThemeToggle />
           </div>
         </div>
-
         {/* Tab row */}
-        <div className="border-t border-border">
-          <div className="max-w-[1400px] mx-auto px-4 flex items-center overflow-x-auto no-scrollbar">
+        <div style={{ borderTop: '1px solid var(--border)' }}>
+          <nav style={{ display: 'flex', alignItems: 'center', overflowX: 'auto', padding: '0 24px', maxWidth: 1400, margin: '0 auto', scrollbarWidth: 'none' }} className="no-scrollbar">
             {TABS.map(({ href, label }) => {
               const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
               return (
-                <Link key={href} href={href} className={`tab-item ${active ? 'active' : ''}`}>
+                <Link key={href} href={href} className={`tab-item${active ? ' active' : ''}`}>
                   {label}
                 </Link>
               )
             })}
-          </div>
+          </nav>
         </div>
       </header>
-
       {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </>
   )

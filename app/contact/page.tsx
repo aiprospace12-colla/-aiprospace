@@ -22,58 +22,39 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-16">
-      <h1 className="text-2xl font-bold text-tx mb-2">Contact</h1>
-      <p className="text-sm text-muted mb-8">Questions, partnerships, or feedback — we reply within 24 hours.</p>
+    <div style={{ maxWidth: 520, margin: '0 auto', padding: '64px 40px' }}>
+      <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>Contact</h1>
+      <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 32 }}>
+        Questions, partnerships, or feedback — we reply within 24 hours.
+      </p>
 
       {status === 'success' ? (
-        <div className="card p-8 text-center">
-          <p className="text-sm font-medium text-tx mb-1">Message sent</p>
-          <p className="text-xs text-muted">We&apos;ll get back to you shortly.</p>
+        <div style={{ border: '1px solid var(--border)', borderRadius: 8, padding: 32, textAlign: 'center' }}>
+          <p style={{ fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>Message sent</p>
+          <p style={{ fontSize: 13, color: 'var(--muted)' }}>We&apos;ll get back to you shortly.</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label className="text-xs text-muted mb-1.5 block">Name</label>
-            <input
-              type="text"
-              required
-              className="input"
-              value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
-              placeholder="Your name"
-            />
+            <label style={{ fontSize: 12, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>Name</label>
+            <input type="text" required className="input" value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your name" />
           </div>
           <div>
-            <label className="text-xs text-muted mb-1.5 block">Email</label>
-            <input
-              type="email"
-              required
-              className="input"
-              value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
-              placeholder="you@example.com"
-            />
+            <label style={{ fontSize: 12, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>Email</label>
+            <input type="email" required className="input" value={form.email}
+              onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" />
           </div>
           <div>
-            <label className="text-xs text-muted mb-1.5 block">Message</label>
-            <textarea
-              required
-              rows={5}
-              className="input resize-none"
-              value={form.message}
-              onChange={e => setForm({ ...form, message: e.target.value })}
-              placeholder="What's on your mind?"
-            />
+            <label style={{ fontSize: 12, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>Message</label>
+            <textarea required rows={5} className="input" value={form.message}
+              onChange={e => setForm({ ...form, message: e.target.value })} placeholder="What's on your mind?" />
           </div>
           {status === 'error' && (
-            <p className="text-xs text-red-500">Something went wrong. Please try again.</p>
+            <p style={{ fontSize: 12, color: '#ef4444' }}>Something went wrong. Please try again.</p>
           )}
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            className="btn btn-primary disabled:opacity-50"
-          >
+          <button type="submit" disabled={status === 'loading'} className="btn btn-primary"
+            style={{ opacity: status === 'loading' ? 0.6 : 1 }}>
             {status === 'loading' ? 'Sending…' : 'Send message'}
           </button>
         </form>

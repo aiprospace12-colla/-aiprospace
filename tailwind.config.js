@@ -12,14 +12,6 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
-      colors: {
-        bg:     'var(--bg)',
-        card:   'var(--card)',
-        border: 'var(--border)',
-        tx:     'var(--text)',
-        muted:  'var(--muted)',
-        hover:  'var(--hover)',
-      },
     },
   },
   plugins: [],

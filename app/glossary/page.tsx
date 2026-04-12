@@ -1,77 +1,84 @@
-'use client'
-
-import { useState } from 'react'
+import type { Metadata } from 'next'
 import { GLOSSARY } from '@/data/glossary'
+
+export const metadata: Metadata = {
+  title: 'AI Glossary — 50+ AI Terms Explained Simply',
+  description: 'Complete AI glossary with 50+ terms explained in simple language. From LLMs to RAG to neural networks — understand any AI term instantly.',
+  alternates: { canonical: 'https://aiprospace.com/glossary' },
+  openGraph: { title: 'AI Glossary — 50+ AI Terms Explained Simply', description: 'Complete AI glossary with 50+ terms explained in simple language.' },
+}
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export default function GlossaryPage() {
-  const [activeLetter, setActiveLetter] = useState('All')
-
-  const presentLetters = new Set(GLOSSARY.map(t => t.letter))
-
-  const grouped = GLOSSARY.reduce<Record<string, typeof GLOSSARY>>((acc, term) => {
-    if (!acc[term.letter]) acc[term.letter] = []
-    acc[term.letter].push(term)
+  const presentLetters = Array.from(new Set(GLOSSARY.map(t => t.letter))).sort()
+  const grouped = GLOSSARY.reduce<Record<string, typeof GLOSSARY>>((acc, t) => {
+    if (!acc[t.letter]) acc[t.letter] = []
+    acc[t.letter].push(t)
     return acc
   }, {})
 
-  const lettersToShow = activeLetter === 'All'
-    ? Object.keys(grouped).sort()
-    : [activeLetter]
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: 'AI Glossary',
+    url: 'https://aiprospace.com/glossary',
+    hasDefinedTerm: GLOSSARY.map(t => ({
+      '@type': 'DefinedTerm',
+      name: t.term,
+      description: t.definition,
+      url: `https://aiprospace.com/glossary#${t.id}`,
+    })),
+  }
 
   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 flex-shrink-0 border-r border-border px-3 py-5 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <p className="text-base font-bold text-tx px-3 mb-3">Glossary</p>
-        <div className="divider mb-4" />
-        <span className="sidebar-label mb-2">BY LETTER</span>
-        <div className="flex flex-col gap-0.5">
-          <button
-            onClick={() => setActiveLetter('All')}
-            className={`sidebar-item ${activeLetter === 'All' ? 'active' : ''}`}
-          >
-            All Terms
-          </button>
-          {LETTERS.filter(l => presentLetters.has(l)).map(letter => (
-            <button
-              key={letter}
-              onClick={() => setActiveLetter(letter)}
-              className={`sidebar-item ${activeLetter === letter ? 'active' : ''}`}
-            >
-              {letter}
-            </button>
-          ))}
-        </div>
-      </aside>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <div style={{ display: 'flex' }}>
+        {/* Sidebar */}
+        <aside style={{
+          width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+          padding: '20px 12px', position: 'sticky', top: 97,
+          height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+        }} className="hidden md:block">
+          <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Glossary</p>
+          <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+          <span className="sidebar-label" style={{ marginBottom: 6 }}>BY LETTER</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <a href="#top" className="sidebar-item">All Terms</a>
+            {LETTERS.filter(l => presentLetters.includes(l)).map(letter => (
+              <a key={letter} href={`#letter-${letter}`} className="sidebar-item">{letter}</a>
+            ))}
+          </div>
+        </aside>
 
-      {/* Main */}
-      <div className="flex-1 px-8 py-8 max-w-3xl">
-        <h1 className="text-2xl font-bold text-tx mb-1">AI Glossary</h1>
-        <p className="text-sm text-muted mb-8">Plain-English definitions for AI terms you actually encounter</p>
+        {/* Main */}
+        <div id="top" style={{ flex: 1, padding: 40, maxWidth: 800, minWidth: 0 }}>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>AI Glossary</h1>
+          <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 40 }}>
+            {GLOSSARY.length}+ AI terms explained in simple language
+          </p>
 
-        <div className="space-y-10">
-          {lettersToShow.map(letter => (
-            <div key={letter}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-xl font-bold text-tx">{letter}</span>
-                <div className="flex-1 border-t border-border" />
-              </div>
-              <div className="space-y-4">
-                {grouped[letter]?.map(term => (
-                  <div key={term.id} className="flex gap-4">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[15px] font-semibold text-tx">{term.term}</p>
-                      <p className="text-[13px] text-muted mt-1 leading-relaxed">{term.definition}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+            {presentLetters.map(letter => (
+              <div key={letter} id={`letter-${letter}`}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                  <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{letter}</span>
+                  <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  {grouped[letter]?.map(term => (
+                    <div key={term.id} id={term.id}>
+                      <p style={{ fontWeight: 600, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>{term.term}</p>
+                      <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.75 }}>{term.definition}</p>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

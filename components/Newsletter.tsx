@@ -8,7 +8,7 @@ export default function Newsletter() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (status === 'loading') return
+    if (!email || status === 'loading') return
     setStatus('loading')
     try {
       const res = await fetch('/api/subscribe', {
@@ -16,35 +16,39 @@ export default function Newsletter() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
-      if (res.ok) { setStatus('success'); setEmail('') }
-      else setStatus('error')
-    } catch { setStatus('error') }
+      setStatus(res.ok ? 'success' : 'error')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
-    <section className="border-t border-border mt-16 pt-12 pb-12">
-      <div className="max-w-md mx-auto text-center">
-        <h2 className="text-xl font-bold text-tx mb-2">Stay Updated</h2>
-        <p className="text-sm text-muted mb-6">Weekly AI tools and guides. Free forever.</p>
-        {status === 'success' ? (
-          <p className="text-sm text-tx">You&apos;re subscribed. Thanks!</p>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <input
-              type="email"
-              required
-              className="input flex-1"
-              placeholder="your@email.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-            <button type="submit" disabled={status === 'loading'} className="btn btn-primary flex-shrink-0">
-              {status === 'loading' ? '...' : 'Subscribe'}
-            </button>
-          </form>
-        )}
-        {status === 'error' && <p className="text-xs text-red-500 mt-2">Something went wrong. Try again.</p>}
-      </div>
-    </section>
+    <div style={{ border: '1px solid var(--border)', borderRadius: 8, padding: '32px', textAlign: 'center', marginTop: 40 }}>
+      <p style={{ fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 4 }}>Stay Updated</p>
+      <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 20 }}>
+        Weekly roundup of the best AI tools, guides, and tips.
+      </p>
+      {status === 'success' ? (
+        <p style={{ fontSize: 14, color: 'var(--text)' }}>You&apos;re subscribed. Thank you!</p>
+      ) : (
+        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8, maxWidth: 400, margin: '0 auto' }}>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            className="input"
+            style={{ flex: 1 }}
+          />
+          <button type="submit" disabled={status === 'loading'} className="btn btn-primary" style={{ opacity: status === 'loading' ? 0.6 : 1 }}>
+            {status === 'loading' ? '...' : 'Subscribe →'}
+          </button>
+        </form>
+      )}
+      {status === 'error' && (
+        <p style={{ fontSize: 12, color: '#ef4444', marginTop: 8 }}>Something went wrong. Try again.</p>
+      )}
+    </div>
   )
 }

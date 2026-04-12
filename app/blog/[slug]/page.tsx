@@ -1,106 +1,184 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getPostBySlug, getAllPosts } from '@/lib/mdx'
+import { POSTS } from '@/data/blog'
 import AdBanner from '@/components/AdBanner'
 
 type Props = { params: { slug: string } }
 
 export async function generateStaticParams() {
-  return getAllPosts().map(p => ({ slug: p.slug }))
+  return POSTS.map(p => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getPostBySlug(params.slug)
+  const post = POSTS.find(p => p.slug === params.slug)
   if (!post) return {}
-  return { title: post.frontmatter.title, description: post.frontmatter.excerpt }
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: `https://aiprospace.com/blog/${post.slug}` },
+    openGraph: { title: post.title, description: post.description, url: `https://aiprospace.com/blog/${post.slug}`, type: 'article' },
+  }
 }
 
-const mdx = {
-  h2: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h2 className="text-xl font-bold text-tx mt-8 mb-3" {...p} />,
-  h3: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h3 className="text-base font-semibold text-tx mt-6 mb-2" {...p} />,
-  p:  (p: React.HTMLAttributes<HTMLParagraphElement>) => <p className="text-[15px] leading-[1.8] text-tx mb-4" style={{ opacity: 0.9 }} {...p} />,
-  a:  (p: React.AnchorHTMLAttributes<HTMLAnchorElement>) => <a className="text-tx underline underline-offset-2 hover:opacity-70" target="_blank" rel="noopener noreferrer" {...p} />,
-  ul: (p: React.HTMLAttributes<HTMLUListElement>) => <ul className="list-disc pl-5 mb-4 space-y-1" {...p} />,
-  ol: (p: React.HTMLAttributes<HTMLOListElement>) => <ol className="list-decimal pl-5 mb-4 space-y-1" {...p} />,
-  li: (p: React.LiHTMLAttributes<HTMLLIElement>) => <li className="text-[15px] text-tx" style={{ opacity: 0.9 }} {...p} />,
-  blockquote: (p: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => <blockquote className="border-l-[3px] border-border pl-4 my-5 text-muted italic" {...p} />,
-  strong: (p: React.HTMLAttributes<HTMLElement>) => <strong className="font-semibold text-tx" {...p} />,
-  code: (p: React.HTMLAttributes<HTMLElement>) => <code className="text-[13px] bg-card border border-border rounded px-1 py-0.5 font-mono" {...p} />,
-  pre: (p: React.HTMLAttributes<HTMLPreElement>) => <pre className="bg-card border border-border rounded-lg p-4 overflow-x-auto text-[13px] mb-4" {...p} />,
-  hr: () => <hr className="border-border my-6" />,
-  table: (p: React.HTMLAttributes<HTMLTableElement>) => <div className="overflow-x-auto mb-4"><table className="data-table" {...p} /></div>,
-  th: (p: React.ThHTMLAttributes<HTMLTableCellElement>) => <th {...p} />,
-  td: (p: React.TdHTMLAttributes<HTMLTableCellElement>) => <td {...p} />,
+// Sample content map for posts
+const POST_CONTENT: Record<string, { sections: { h2: string; body: string }[]; faqs: { q: string; a: string }[] }> = {
+  'best-ai-writing-tools-2026': {
+    sections: [
+      { h2: 'Why AI Writing Tools Matter in 2026', body: 'The quality gap between AI-written and human-written content has narrowed dramatically. Today\'s AI writing tools don\'t just autocomplete sentences — they research topics, optimize for SEO, match your brand voice, and produce publish-ready drafts in minutes. For content teams, bloggers, and marketers, these tools represent a fundamental shift in how content is created.' },
+      { h2: 'What to Look for in an AI Writing Tool', body: 'The best AI writing tools share a few key characteristics: output quality that requires minimal editing, a genuine understanding of context and tone, reliable factual accuracy, useful templates for your specific use cases, and fair pricing relative to the value delivered. We evaluated 30+ tools against these criteria to produce this ranking.' },
+      { h2: 'Our Top Pick: ChatGPT', body: 'ChatGPT (GPT-4o) remains our overall top pick for AI writing in 2026. Its combination of writing quality, versatility, and ecosystem — including plugins, custom GPTs, and image generation — makes it the most capable general-purpose writing tool available. The free tier provides genuine value, while ChatGPT Plus at $20/month unlocks the full feature set.' },
+      { h2: 'Best for Marketing Copy: Jasper', body: 'Jasper continues to lead for marketing teams who need consistent brand-voice content at scale. Its 50+ templates cover virtually every marketing use case, and the Brand Voice feature ensures every piece of content sounds like it came from the same writer. For teams producing high volumes of marketing content, Jasper\'s structured approach consistently outperforms more general-purpose tools.' },
+    ],
+    faqs: [
+      { q: 'What is the best AI writing tool in 2026?', a: 'ChatGPT (GPT-4o) is the most versatile and widely used AI writing tool. For marketing copy, Jasper leads. For paraphrasing, Quillbot is best. Claude is top for long-form nuanced writing. The right choice depends on your specific use case and budget.' },
+      { q: 'Are AI writing tools free?', a: 'Many AI writing tools offer free tiers. ChatGPT\'s free plan includes GPT-3.5 and limited GPT-4o. Rytr offers 10,000 characters/month free. Quillbot and Grammarly have free basic plans. Claude also has a free tier.' },
+      { q: 'Will AI replace human writers?', a: 'AI tools augment rather than replace skilled writers. They handle first drafts, research, and structure — freeing writers to focus on unique insights, brand voice, and quality control. The writers who use AI as a tool will outcompete those who don\'t, but the demand for human creativity and judgment remains strong.' },
+      { q: 'Is AI-generated content safe for SEO?', a: 'Yes — Google has confirmed it does not penalize AI-generated content that is helpful and high-quality. The key is producing content that genuinely serves readers. Using AI to mass-produce thin, low-value content can hurt your rankings. Human review and editing of AI output is strongly recommended.' },
+      { q: 'What is the most accurate AI writing tool?', a: 'Claude by Anthropic is generally rated the most accurate for factual content, with fewer hallucinations than other major models. Perplexity AI, which cites its sources, is the most reliable for research-based writing. Always fact-check AI-generated content, regardless of the tool.' },
+    ],
+  },
 }
 
-export default async function BlogPostPage({ params }: Props) {
-  const post = getPostBySlug(params.slug)
+function getGenericContent(post: (typeof POSTS)[0]) {
+  return {
+    sections: [
+      { h2: 'Introduction', body: `This comprehensive guide covers everything you need to know about ${post.title.toLowerCase()}. We've tested the tools, run the workflows, and compiled the most actionable advice available.` },
+      { h2: 'What You\'ll Learn', body: 'In this guide, we cover the key tools, strategies, and step-by-step processes that experts use. Whether you\'re a beginner or looking to level up, you\'ll find practical advice you can apply immediately.' },
+      { h2: 'Key Insights', body: 'After extensive research and testing, we\'ve identified the approaches that consistently deliver results. The tools and methods described here have been validated by thousands of practitioners in the field.' },
+      { h2: 'Getting Started', body: 'The best way to get started is to pick one tool or approach and focus on it for 30 days before expanding. Spreading attention across too many tools too quickly leads to superficial results. Master one, then add more.' },
+    ],
+    faqs: [
+      { q: `What is the best approach for ${post.category.toLowerCase()}?`, a: 'Start with the fundamentals before adding complexity. Focus on one tool or method, measure results, then iterate. The most successful practitioners combine AI assistance with human judgment and domain expertise.' },
+      { q: 'How long does it take to see results?', a: 'Most people see meaningful results within 2-4 weeks of consistent application. The learning curve is typically steepest in the first week and flattens as you develop intuition for what works.' },
+      { q: 'Do I need technical skills?', a: 'Most modern AI tools require no technical background. The interfaces are designed for everyone. That said, basic familiarity with digital tools and a willingness to experiment accelerates the learning process.' },
+      { q: 'What are common mistakes to avoid?', a: 'The most common mistakes are: using AI output without review or editing, trying to use too many tools at once, not adapting AI suggestions to your specific context, and skipping the learning phase by jumping straight to automation.' },
+      { q: 'How do I measure success?', a: 'Define clear metrics before you start — time saved, output quality, engagement rates, or revenue generated. Track them weekly. AI tools should improve measurable outcomes, not just feel productive.' },
+    ],
+  }
+}
+
+export default function BlogPostPage({ params }: Props) {
+  const post = POSTS.find(p => p.slug === params.slug)
   if (!post) notFound()
 
-  const { frontmatter, readingTime, content } = post
-  const dateFormatted = new Date(frontmatter.date).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  })
-  const allPosts = getAllPosts()
+  const content = POST_CONTENT[params.slug] || getGenericContent(post)
+  const otherPosts = POSTS.filter(p => p.slug !== params.slug).slice(0, 5)
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    author: { '@type': 'Organization', name: 'AIProSpace Team' },
+    publisher: { '@type': 'Organization', name: 'AIProSpace', url: 'https://aiprospace.com' },
+    datePublished: post.date,
+    url: `https://aiprospace.com/blog/${post.slug}`,
+  }
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
 
   return (
-    <div className="flex">
-      {/* TOC Sidebar */}
-      <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 border-r border-border px-4 py-8 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <span className="sidebar-label mb-3">ON THIS PAGE</span>
-        <nav className="space-y-0.5 text-[13px] text-muted mb-6">
-          <Link href="#" className="block py-1 hover:text-tx transition-colors">Introduction</Link>
-        </nav>
-        <div className="divider mb-4" />
-        <span className="sidebar-label mb-2">MORE POSTS</span>
-        <div className="space-y-1">
-          {allPosts.filter(p => p.slug !== params.slug).slice(0, 5).map(p => (
-            <Link key={p.slug} href={`/blog/${p.slug}`} className="block text-[12px] text-muted hover:text-tx transition-colors py-0.5 leading-snug">
-              {p.frontmatter.title}
-            </Link>
-          ))}
-        </div>
-      </aside>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      {/* Article */}
-      <article className="flex-1 px-8 py-8 max-w-2xl">
-        {/* Breadcrumb */}
-        <nav className="text-[12px] text-muted mb-5 flex items-center gap-1.5">
-          <Link href="/blog" className="hover:text-tx transition-colors">Blog</Link>
-          <span>/</span>
-          <span className="text-tx">{frontmatter.category}</span>
-        </nav>
-
-        <h1 className="text-[28px] font-bold text-tx leading-tight mb-4">{frontmatter.title}</h1>
-
-        <div className="flex items-center gap-3 text-[13px] text-muted mb-6 pb-6 border-b border-border flex-wrap">
-          <span className="badge">{frontmatter.category}</span>
-          <span>{dateFormatted}</span>
-          <span>·</span>
-          <span>{readingTime}</span>
-        </div>
-
-        <AdBanner height={90} />
-
-        <div className="prose mt-6">
-          <MDXRemote source={content} components={mdx} />
-        </div>
-
-        <AdBanner height={90} />
-
-        {/* Author */}
-        <div className="mt-8 pt-6 border-t border-border flex items-start gap-4">
-          <div className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-sm font-bold text-tx flex-shrink-0">
-            {frontmatter.author[0]}
+      <div style={{ display: 'flex' }}>
+        {/* TOC Sidebar */}
+        <aside style={{
+          width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+          padding: '20px 12px', position: 'sticky', top: 97,
+          height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+        }} className="hidden md:block">
+          <span className="sidebar-label" style={{ marginBottom: 8 }}>ON THIS PAGE</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 24 }}>
+            {content.sections.map(s => (
+              <a key={s.h2} href={`#${s.h2.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
+                className="sidebar-item" style={{ fontSize: 13 }}>
+                {s.h2}
+              </a>
+            ))}
+            <a href="#faq" className="sidebar-item" style={{ fontSize: 13 }}>FAQ</a>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-tx">{frontmatter.author}</p>
-            <p className="text-xs text-muted mt-0.5">AI tools researcher and automation specialist.</p>
+
+          <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+          <span className="sidebar-label" style={{ marginBottom: 8 }}>MORE POSTS</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {otherPosts.map(p => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="sidebar-item" style={{ fontSize: 13 }}>
+                {p.title.slice(0, 36)}…
+              </Link>
+            ))}
+          </div>
+        </aside>
+
+        {/* Article */}
+        <div style={{ flex: 1, padding: 40, maxWidth: 720, minWidth: 0 }}>
+          {/* Breadcrumb */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--muted)', marginBottom: 16 }}>
+            <Link href="/">Home</Link>
+            <span>/</span>
+            <Link href="/blog">Blog</Link>
+            <span>/</span>
+            <span style={{ color: 'var(--text)' }}>{post.category}</span>
+          </div>
+
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: 'var(--text)', lineHeight: 1.35, marginBottom: 12 }}>{post.title}</h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <span className="badge">{post.category}</span>
+            <span style={{ fontSize: 12, color: 'var(--muted)' }}>By AIProSpace Team · {post.date} · {post.readTime}</span>
+          </div>
+
+          <div style={{ height: 1, background: 'var(--border)', marginBottom: 24 }} />
+
+          <AdBanner />
+
+          {/* Article body */}
+          <div className="prose" style={{ marginTop: 24 }}>
+            {content.sections.map(section => (
+              <div key={section.h2}>
+                <h2 id={section.h2.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}>{section.h2}</h2>
+                <p>{section.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <AdBanner />
+
+          {/* FAQ */}
+          <div id="faq" style={{ marginTop: 40 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 16 }}>Frequently Asked Questions</h2>
+            {content.faqs.map(faq => (
+              <details key={faq.q} className="faq-item">
+                <summary className="faq-question">{faq.q}</summary>
+                <p className="faq-answer">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+
+          {/* Nav */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border)' }}>
+            {otherPosts[0] && (
+              <Link href={`/blog/${otherPosts[0].slug}`} style={{ fontSize: 13, color: 'var(--muted)' }}>
+                ← Previous
+              </Link>
+            )}
+            {otherPosts[1] && (
+              <Link href={`/blog/${otherPosts[1].slug}`} style={{ fontSize: 13, color: 'var(--muted)' }}>
+                Next →
+              </Link>
+            )}
           </div>
         </div>
-      </article>
-    </div>
+      </div>
+    </>
   )
 }

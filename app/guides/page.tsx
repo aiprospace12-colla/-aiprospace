@@ -1,61 +1,57 @@
-'use client'
-
-import { useState } from 'react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Compass, Zap, PenTool, BarChart, DollarSign, Wrench, Clock, BookOpen } from 'lucide-react'
-import { GUIDES } from '@/data/guides'
-import AdBanner from '@/components/AdBanner'
+import { GUIDES, GUIDE_TOPICS } from '@/data/guides'
 
-const SIDEBAR = [
-  { label: 'All',              icon: Compass,    val: 'All'              },
-  { label: 'Getting Started',  icon: Compass,    val: 'Getting Started'  },
-  { label: 'Automation',       icon: Zap,        val: 'Automation'       },
-  { label: 'Content Creation', icon: PenTool,    val: 'Content Creation' },
-  { label: 'SEO with AI',      icon: BarChart,   val: 'SEO with AI'      },
-  { label: 'Make Money',       icon: DollarSign, val: 'Make Money'       },
-  { label: 'Tool Tutorials',   icon: Wrench,     val: 'Tool Tutorials'   },
-]
+export const metadata: Metadata = {
+  title: 'AI Guides — Step by Step Tutorials',
+  description: 'Master AI tools with our step by step guides. From beginners to advanced — free tutorials for ChatGPT, Claude, n8n and more.',
+  alternates: { canonical: 'https://aiprospace.com/guides' },
+  openGraph: { title: 'AI Guides — Step by Step Tutorials', description: 'Free step-by-step AI tutorials for every skill level.' },
+}
+
+const DIFF_COLOR: Record<string, string> = {
+  Beginner: 'var(--muted)',
+  Intermediate: 'var(--muted)',
+  Advanced: 'var(--muted)',
+}
 
 export default function GuidesPage() {
-  const [active, setActive] = useState('All')
-  const filtered = active === 'All' ? GUIDES : GUIDES.filter(g => g.topic === active)
-
   return (
-    <div className="flex">
+    <div style={{ display: 'flex' }}>
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 flex-shrink-0 border-r border-border px-3 py-5 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <p className="text-base font-bold text-tx px-3 mb-3">Guides</p>
-        <div className="divider mb-4" />
-        <span className="sidebar-label mb-2">BY TOPIC</span>
-        <div className="flex flex-col gap-0.5">
-          {SIDEBAR.map(({ label, icon: Icon, val }) => (
-            <button key={val} onClick={() => setActive(val)} className={`sidebar-item ${active === val ? 'active' : ''}`}>
-              <Icon size={16} />{label}
-            </button>
+      <aside style={{
+        width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+        padding: '20px 12px', position: 'sticky', top: 97,
+        height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+      }} className="hidden md:block">
+        <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Guides</p>
+        <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+        <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TOPIC</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Link href="/guides" className="sidebar-item active">All Guides</Link>
+          {GUIDE_TOPICS.map(topic => (
+            <Link key={topic.slug} href={`/guides?topic=${topic.slug}`} className="sidebar-item">
+              {topic.label}
+            </Link>
           ))}
         </div>
       </aside>
 
       {/* Main */}
-      <div className="flex-1 px-8 py-8">
-        <h1 className="text-2xl font-bold text-tx mb-1">Guides</h1>
-        <p className="text-sm text-muted mb-4">Step by step AI tutorials</p>
-        <AdBanner height={90} />
-        <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {filtered.map(guide => (
-            <Link key={guide.slug} href={`/guides/${guide.slug}`} className="card flex flex-col gap-3 p-5">
-              <BookOpen size={20} className="text-muted" />
-              <div>
-                <p className="text-[15px] font-semibold text-tx leading-snug">{guide.title}</p>
-                <p className="text-[13px] text-muted mt-1 line-clamp-2">{guide.description}</p>
+      <div style={{ flex: 1, padding: 40, maxWidth: 900, minWidth: 0 }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>AI Guides</h1>
+        <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 32 }}>Step by step tutorials for every skill level</p>
+
+        <div className="guide-grid">
+          {GUIDES.map(guide => (
+            <Link key={guide.slug} href={`/guides/${guide.slug}`} className="card">
+              <p className="card-title">{guide.title}</p>
+              <p className="card-desc" style={{ marginBottom: 14 }}>{guide.description}</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span className="badge" style={{ color: DIFF_COLOR[guide.difficulty] }}>{guide.difficulty}</span>
+                <span style={{ fontSize: 12, color: 'var(--muted)' }}>{guide.readTime}</span>
               </div>
-              <div className="flex items-center justify-between mt-auto">
-                <span className="badge">{guide.difficulty}</span>
-                <span className="flex items-center gap-1 text-[12px] text-muted">
-                  <Clock size={11} />{guide.readTime}
-                </span>
-              </div>
-              <p className="text-[13px] text-muted">Read Guide →</p>
+              <p style={{ fontSize: 13, color: 'var(--text)', marginTop: 12 }}>Read Guide →</p>
             </Link>
           ))}
         </div>

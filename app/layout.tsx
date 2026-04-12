@@ -15,6 +15,19 @@ export const metadata: Metadata = {
   verification: {
     google: 'Yml5E2bkHbji8WfFrAgzgmltXC2zkJ2UyH70Z57xN4A',
   },
+  openGraph: {
+    type: 'website',
+    siteName: 'AIProSpace',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@aiprospace',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

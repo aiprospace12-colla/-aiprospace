@@ -1,50 +1,85 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Clock, ChevronLeft, BookOpen } from 'lucide-react'
 import { GUIDES } from '@/data/guides'
+import AdBanner from '@/components/AdBanner'
 
 type Props = { params: { slug: string } }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return GUIDES.map(g => ({ slug: g.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = GUIDES.find(g => g.slug === params.slug)
   if (!guide) return {}
-  return { title: guide.title, description: guide.description }
+  return {
+    title: guide.metaTitle,
+    description: guide.metaDescription,
+    alternates: { canonical: `https://aiprospace.com/guides/${guide.slug}` },
+    openGraph: { title: guide.metaTitle, description: guide.metaDescription },
+  }
 }
 
-export default function GuidePage({ params }: Props) {
+export default function GuideDetailPage({ params }: Props) {
   const guide = GUIDES.find(g => g.slug === params.slug)
   if (!guide) notFound()
+  const others = GUIDES.filter(g => g.slug !== params.slug).slice(0, 6)
 
   return (
-    <div className="flex">
-      <aside className="hidden md:flex flex-col w-60 flex-shrink-0 border-r border-border px-3 py-5 sticky top-[97px] self-start h-[calc(100vh-97px)] overflow-y-auto">
-        <p className="text-base font-bold text-tx px-3 mb-3">Guides</p>
-        <div className="divider mb-4" />
-        <Link href="/guides" className="sidebar-item"><BookOpen size={16} />All Guides</Link>
+    <div style={{ display: 'flex' }}>
+      <aside style={{
+        width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
+        padding: '20px 12px', position: 'sticky', top: 97,
+        height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
+      }} className="hidden md:block">
+        <Link href="/guides" style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16, display: 'block' }}>← All Guides</Link>
+        <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+        <span className="sidebar-label" style={{ marginBottom: 6 }}>MORE GUIDES</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {others.map(g => (
+            <Link key={g.slug} href={`/guides/${g.slug}`}
+              className={`sidebar-item${params.slug === g.slug ? ' active' : ''}`}
+              style={{ fontSize: 13 }}>
+              {g.title.slice(0, 32)}…
+            </Link>
+          ))}
+        </div>
       </aside>
 
-      <div className="flex-1 px-8 py-8 max-w-2xl">
-        <Link href="/guides" className="inline-flex items-center gap-1 text-[12px] text-muted hover:text-tx transition-colors mb-6">
-          <ChevronLeft size={13} />Back to Guides
-        </Link>
-        <div className="flex items-center gap-2 mb-3 flex-wrap">
-          <span className="badge">{guide.topic}</span>
+      <div style={{ flex: 1, padding: 40, maxWidth: 720, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--muted)', marginBottom: 16 }}>
+          <Link href="/">Home</Link><span>/</span>
+          <Link href="/guides">Guides</Link><span>/</span>
+          <span style={{ color: 'var(--text)' }}>{guide.topic}</span>
+        </div>
+
+        <h1 style={{ fontSize: 26, fontWeight: 700, color: 'var(--text)', lineHeight: 1.35, marginBottom: 12 }}>{guide.title}</h1>
+        <div style={{ display: 'flex', gap: 10, marginBottom: 24, alignItems: 'center' }}>
           <span className="badge">{guide.difficulty}</span>
-          <span className="flex items-center gap-1 text-[12px] text-muted"><Clock size={11} />{guide.readTime} read</span>
+          <span className="badge">{guide.readTime}</span>
+          <span style={{ fontSize: 12, color: 'var(--muted)' }}>By AIProSpace Team · Apr 2026</span>
         </div>
-        <h1 className="text-2xl font-bold text-tx mb-3">{guide.title}</h1>
-        <p className="text-sm text-muted mb-8">{guide.description}</p>
-        <div className="border border-border rounded-lg p-6 text-center">
-          <p className="text-sm text-muted">Full guide content coming soon.</p>
-          <Link href="/guides" className="text-xs text-muted hover:text-tx mt-2 inline-block underline">
-            Browse all guides
-          </Link>
+        <div style={{ height: 1, background: 'var(--border)', marginBottom: 24 }} />
+
+        <AdBanner />
+
+        <div className="prose" style={{ marginTop: 24 }}>
+          <h2>Introduction</h2>
+          <p>{guide.description} This guide walks through everything step by step, with real examples you can apply immediately.</p>
+          <h2>What You&apos;ll Learn</h2>
+          <p>By the end of this guide you&apos;ll have a solid foundation in {guide.topic.toLowerCase()} using AI tools, practical workflows you can adapt to your situation, and the knowledge to continue learning independently.</p>
+          <h2>Getting Started</h2>
+          <p>Before diving in, make sure you have access to the tools mentioned. Most have free tiers that are sufficient to follow along. We recommend working through the examples as you read rather than reading all at once.</p>
+          <h2>Key Concepts</h2>
+          <p>Understanding the fundamentals will help you apply these techniques beyond the specific examples in this guide. The principles remain consistent even as individual tools evolve.</p>
+          <h2>Practical Application</h2>
+          <p>The real value comes from applying these concepts to your actual work. After reading each section, take 10-15 minutes to try the technique on a real task you need to accomplish.</p>
+          <h2>Next Steps</h2>
+          <p>Once you&apos;ve worked through this guide, explore the related tools and resources in our <Link href="/tools/ai-writing-tools">Tools</Link> section and check out the <Link href="/courses/chatgpt">Courses</Link> for deeper learning.</p>
         </div>
+
+        <div style={{ marginTop: 40 }}><AdBanner /></div>
       </div>
     </div>
   )
