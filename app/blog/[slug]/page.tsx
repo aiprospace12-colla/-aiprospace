@@ -137,7 +137,16 @@ export default function BlogPostPage({ params }: Props) {
             <span style={{ fontSize: 12, color: 'var(--muted)' }}>By AIProSpace Team · {post.date} · {post.readTime}</span>
           </div>
 
-          <div style={{ height: 1, background: 'var(--border)', marginBottom: 24 }} />
+          {post.heroImage && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={post.heroImage}
+              alt={post.title}
+              style={{ width: '100%', height: 280, objectFit: 'cover', borderRadius: 10, marginBottom: 24, display: 'block', border: '1px solid var(--border)' }}
+            />
+          )}
+
+          {!post.heroImage && <div style={{ height: 1, background: 'var(--border)', marginBottom: 24 }} />}
 
           <AdBanner />
 

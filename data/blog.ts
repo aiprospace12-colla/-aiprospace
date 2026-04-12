@@ -6,6 +6,7 @@ export type BlogPost = {
   date: string
   readTime: string
   description: string
+  heroImage?: string
 }
 
 export const POSTS: BlogPost[] = [
@@ -17,6 +18,7 @@ export const POSTS: BlogPost[] = [
     date: 'Apr 10, 2026',
     readTime: '8 min read',
     description: 'We tested 30+ AI writing tools and ranked the top 10. ChatGPT, Jasper, Claude, and Copy.ai compared — find the best AI writing tool for your needs.',
+    heroImage: 'https://images.unsplash.com/photo-1655720031554-a929595ffad7?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'automate-social-media-n8n',
@@ -26,6 +28,7 @@ export const POSTS: BlogPost[] = [
     date: 'Apr 8, 2026',
     readTime: '12 min read',
     description: 'Step-by-step guide to automating your social media with n8n. Learn to generate AI content, schedule posts, and publish automatically across platforms.',
+    heroImage: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'chatgpt-vs-claude-vs-gemini-2026',
@@ -35,6 +38,7 @@ export const POSTS: BlogPost[] = [
     date: 'Apr 6, 2026',
     readTime: '10 min read',
     description: 'ChatGPT vs Claude vs Gemini 2026 comparison. 50+ tests across writing, coding, reasoning, and creativity. Find out which AI chatbot is best for your use case.',
+    heroImage: 'https://images.unsplash.com/photo-1675557009483-e6a9b5cd58be?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'beginners-guide-ai-tools-2026',
@@ -44,6 +48,7 @@ export const POSTS: BlogPost[] = [
     date: 'Apr 4, 2026',
     readTime: '15 min read',
     description: "Complete beginner's guide to AI tools in 2026. Learn what AI tools are, how to use them, and which ones to start with — no technical knowledge required.",
+    heroImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'make-money-ai-tools-2026',
@@ -53,6 +58,7 @@ export const POSTS: BlogPost[] = [
     date: 'Apr 2, 2026',
     readTime: '14 min read',
     description: '15 proven ways to make money with AI tools in 2026. From AI freelancing to digital products to starting an AI agency — methods that actually work.',
+    heroImage: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'perplexity-ai-review-2026',
@@ -62,6 +68,7 @@ export const POSTS: BlogPost[] = [
     date: 'Mar 30, 2026',
     readTime: '7 min read',
     description: 'Perplexity AI review 2026. After 3 months of daily use, is it worth switching from Google? We test accuracy, speed, and the Pro plan.',
+    heroImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'how-to-use-n8n-guide',
@@ -71,6 +78,7 @@ export const POSTS: BlogPost[] = [
     date: 'Mar 28, 2026',
     readTime: '20 min read',
     description: 'Complete n8n tutorial from beginner to advanced. Learn to install n8n, build workflows, use AI nodes, and create production automations.',
+    heroImage: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'midjourney-vs-leonardo-ai',
@@ -80,6 +88,7 @@ export const POSTS: BlogPost[] = [
     date: 'Mar 26, 2026',
     readTime: '9 min read',
     description: 'Midjourney vs Leonardo AI 2026 comparison. We generated 100+ images across quality, style, and speed. Find out which AI image generator is right for you.',
+    heroImage: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'best-free-ai-tools-2026',
@@ -89,6 +98,7 @@ export const POSTS: BlogPost[] = [
     date: 'Mar 24, 2026',
     readTime: '11 min read',
     description: '20 best free AI tools in 2026. Completely free tools for writing, image generation, coding, research, and more — no credit card required.',
+    heroImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80&auto=format&fit=crop',
   },
   {
     slug: 'cursor-ai-review-2026',
@@ -98,6 +108,7 @@ export const POSTS: BlogPost[] = [
     date: 'Mar 22, 2026',
     readTime: '8 min read',
     description: 'Cursor AI code editor review 2026. After 6 months of daily use, is Cursor worth switching from VS Code? We cover features, pricing, and real performance.',
+    heroImage: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=1200&q=80&auto=format&fit=crop',
   },
 ]
 

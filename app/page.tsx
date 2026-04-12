@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Wrench, GraduationCap, Rss, BookOpen, Lightbulb, Book, FileText, ALargeSmall, Cpu } from 'lucide-react'
 import Newsletter from '@/components/Newsletter'
 import AdBanner from '@/components/AdBanner'
+import { OrbitIcon } from '@/components/Logo'
 
 export const metadata: Metadata = {
   title: 'AIProSpace — #1 AI Tools & Resources Hub',
@@ -14,15 +16,15 @@ export const metadata: Metadata = {
 }
 
 const CARDS = [
-  { title: 'Tools',        href: '/tools/ai-writing-tools',           desc: 'Find the right tool for any task'           },
-  { title: 'Blog',         href: '/blog',                              desc: 'Latest AI news & in-depth reviews'          },
-  { title: 'Guides',       href: '/guides',                            desc: 'Master popular AI tools step by step'       },
-  { title: 'Resources',    href: '/resources',                         desc: 'Free ebooks & cheat sheets'                 },
-  { title: 'Automation',   href: '/tools/ai-automation-tools',         desc: 'Automate your workflow with AI'             },
-  { title: 'Make Money',   href: '/blog/make-money-ai-tools-2026',     desc: 'Earn online using AI tools'                 },
-  { title: 'Courses',      href: '/courses/chatgpt',                   desc: 'Learn from top AI instructors'              },
-  { title: 'Cheat Sheets', href: '/resources',                         desc: 'Get quick answers at a glance'              },
-  { title: 'Glossary',     href: '/glossary',                          desc: 'Understand any AI term instantly'           },
+  { title: 'Tools',        href: '/tools/ai-writing-tools',       desc: 'Find the right tool for any task',          Icon: Wrench        },
+  { title: 'Courses',      href: '/courses/chatgpt',              desc: 'Learn from top AI instructors',             Icon: GraduationCap },
+  { title: 'Blog',         href: '/blog',                         desc: 'Latest AI news & in-depth reviews',         Icon: Rss           },
+  { title: 'Guides',       href: '/guides',                       desc: 'Master popular AI tools step by step',      Icon: BookOpen      },
+  { title: 'Resources',    href: '/resources',                    desc: 'Free ebooks & cheat sheets',                Icon: Lightbulb     },
+  { title: 'Books',        href: '/books',                        desc: 'Best AI books curated & reviewed',          Icon: Book          },
+  { title: 'Articles',     href: '/blog',                         desc: 'In-depth tutorials & analysis',             Icon: FileText      },
+  { title: 'Glossary',     href: '/glossary',                     desc: 'Understand any AI term instantly',          Icon: ALargeSmall   },
+  { title: 'AI Tools',     href: '/tools/ai-agent-builders',      desc: 'Automate your workflow with AI agents',     Icon: Cpu           },
 ]
 
 const jsonLd = {
@@ -44,11 +46,11 @@ export default function HomePage() {
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '64px 40px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <svg viewBox="0 0 24 24" width="32" height="32" style={{ color: 'var(--text)', margin: '0 auto 20px' }}>
-            <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5"/>
-            <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)"/>
-            <circle cx="19" cy="9" r="1.5" fill="currentColor"/>
-          </svg>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+            <div className="logo-badge" style={{ width: 48, height: 48, borderRadius: 10 }}>
+              <OrbitIcon size={22} />
+            </div>
+          </div>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--text)', marginBottom: 12, lineHeight: 1.3 }}>
             Welcome to AIProSpace
           </h1>
@@ -66,13 +68,14 @@ export default function HomePage() {
         <div className="home-grid" style={{ marginTop: 32 }}>
           {CARDS.map(card => (
             <Link key={card.href + card.title} href={card.href} className="card">
+              <card.Icon size={18} style={{ color: 'var(--muted)', marginBottom: 8, flexShrink: 0 }} />
               <p className="card-title">{card.title}</p>
               <p className="card-desc">{card.desc}</p>
             </Link>
           ))}
         </div>
 
-        <AdBanner className="mt-8" />
+        <div style={{ marginTop: 40 }}><AdBanner /></div>
 
         <Newsletter />
       </div>

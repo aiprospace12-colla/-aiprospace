@@ -15,6 +15,7 @@ const TABS = [
   { href: '/guides',    label: 'Guides'    },
   { href: '/resources', label: 'Resources' },
   { href: '/courses',   label: 'Courses'   },
+  { href: '/books',     label: 'Books'     },
   { href: '/glossary',  label: 'Glossary'  },
 ]
 
@@ -35,36 +36,38 @@ export default function Navbar() {
 
   return (
     <>
-      <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
+      <header className="navbar">
         {/* Top row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, height: 56, padding: '0 24px', maxWidth: 1400, margin: '0 auto' }}>
+        <div className="navbar-top">
+          {/* Left: Logo */}
           <Logo />
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-            <button
-              onClick={() => setSearchOpen(true)}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 8,
-                background: 'var(--card-bg)', border: '1px solid var(--border)',
-                borderRadius: 6, padding: '0 12px', height: 34,
-                width: '100%', maxWidth: 400, cursor: 'pointer',
-                fontSize: 13, color: 'var(--muted)', textAlign: 'left',
-              }}
+
+          {/* Center: Search */}
+          <button className="navbar-search" onClick={() => setSearchOpen(true)}>
+            <Search size={15} style={{ flexShrink: 0 }} />
+            <span style={{ flex: 1, textAlign: 'left', fontSize: 14 }}>Search...</span>
+            <span style={{
+              fontSize: 11, fontWeight: 500, border: '1px solid var(--border)',
+              borderRadius: 4, padding: '1px 5px', background: 'var(--hover-bg)', color: 'var(--muted)',
+            }}>Ctrl K</span>
+          </button>
+
+          {/* Right */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
+            <Link href="/blog"
+              style={{ fontSize: 14, fontWeight: 500, color: 'var(--muted)', whiteSpace: 'nowrap' }}
+              onMouseOver={e => ((e.target as HTMLElement).style.color = 'var(--text)')}
+              onMouseOut={e => ((e.target as HTMLElement).style.color = 'var(--muted)')}
             >
-              <Search size={13} style={{ flexShrink: 0 }} />
-              <span style={{ flex: 1 }}>Search...</span>
-              <span style={{ fontSize: 11, border: '1px solid var(--border)', borderRadius: 4, padding: '1px 5px', background: 'var(--bg)', color: 'var(--muted)' }}>⌘K</span>
-            </button>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-            <Link href="/blog" style={{ fontSize: 13, color: 'var(--muted)', whiteSpace: 'nowrap' }}>
               Newsletter ›
             </Link>
             <ThemeToggle />
           </div>
         </div>
+
         {/* Tab row */}
-        <div style={{ borderTop: '1px solid var(--border)' }}>
-          <nav style={{ display: 'flex', alignItems: 'center', overflowX: 'auto', padding: '0 24px', maxWidth: 1400, margin: '0 auto', scrollbarWidth: 'none' }} className="no-scrollbar">
+        <div className="navbar-tabs">
+          <nav className="navbar-tabs-inner no-scrollbar">
             {TABS.map(({ href, label }) => {
               const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
               return (
@@ -76,6 +79,7 @@ export default function Navbar() {
           </nav>
         </div>
       </header>
+
       {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </>
   )
