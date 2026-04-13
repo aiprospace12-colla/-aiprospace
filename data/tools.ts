@@ -22,7 +22,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-writing-tools',
     label: 'Writing Tools',
-    metaTitle: '10 Best AI Writing Tools in 2026 (Free & Paid) — Tested & Ranked',
+    metaTitle: '10 Best AI Writing Tools in 2026 (Free & Paid)',
     metaDescription: 'Looking for the best AI writing tools? We tested 30+ tools and ranked the top 10. ChatGPT, Jasper, Copy.ai compared — find the right one for you.',
     h1: '10 Best AI Writing Tools in 2026 (Free & Paid)',
     intro: 'AI writing tools have transformed how we create content. After testing 30+ tools, here are the best AI writing assistants for blogs, marketing copy, emails, and more.',
@@ -49,7 +49,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-image-generators',
     label: 'Image Generators',
-    metaTitle: '10 Best AI Image Generators in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Image Generators in 2026 (Free & Paid)',
     metaDescription: 'Best AI image generators tested and ranked. Midjourney, DALL-E 3, Leonardo AI, Stable Diffusion compared. Find the best AI art generator for your needs.',
     h1: '10 Best AI Image Generators in 2026',
     intro: 'AI image generators can create stunning visuals from text prompts in seconds. After testing the top platforms, here are the best AI art generators for designers, creators, and businesses.',
@@ -76,7 +76,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-video-generators',
     label: 'Video Generators',
-    metaTitle: '8 Best AI Video Generators in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Video Generators in 2026 (Free & Paid)',
     metaDescription: 'Best AI video generators tested and compared. Runway, Sora, Pika, HeyGen, Synthesia reviewed. Generate videos from text with AI.',
     h1: '8 Best AI Video Generators in 2026',
     intro: 'AI video generation has exploded in 2026. From text-to-video to AI avatars, these tools let anyone create professional video content. Here are the best options tested.',
@@ -101,7 +101,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-voice-generators',
     label: 'Voice Generators',
-    metaTitle: '8 Best AI Voice Generators in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Voice Generators in 2026 (Free & Paid)',
     metaDescription: 'Best AI voice generators and text-to-speech tools reviewed. ElevenLabs, Murf, PlayHT, Descript compared. Clone voices and create voiceovers with AI.',
     h1: '8 Best AI Voice Generators in 2026',
     intro: 'AI voice generation creates natural-sounding speech from text in seconds. Whether you need voiceovers, podcasts, or custom voice clones, these are the best tools available.',
@@ -126,7 +126,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-coding-tools',
     label: 'Coding Assistants',
-    metaTitle: '10 Best AI Coding Tools in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Coding Tools in 2026 (Free & Paid)',
     metaDescription: 'Best AI coding assistants reviewed. Cursor, GitHub Copilot, Claude, Codeium compared. Find the best AI code tool for your workflow.',
     h1: '10 Best AI Coding Tools in 2026',
     intro: 'AI coding assistants can dramatically speed up development. From autocomplete to full code generation, these are the best AI tools for developers in 2026.',
@@ -153,7 +153,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-chatbots',
     label: 'Chatbots',
-    metaTitle: '8 Best AI Chatbots in 2026 — ChatGPT Alternatives Ranked',
+    metaTitle: 'Best AI Chatbots in 2026',
     metaDescription: 'Best AI chatbots compared: ChatGPT, Claude, Gemini, Perplexity, Grok reviewed. Find the best AI assistant for your needs in 2026.',
     h1: '8 Best AI Chatbots in 2026',
     intro: 'AI chatbots have become essential tools for research, writing, and problem-solving. Here are the best AI assistants available in 2026, tested across dozens of real-world tasks.',
@@ -178,7 +178,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-automation-tools',
     label: 'Automation',
-    metaTitle: '8 Best AI Automation Tools in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Automation Tools in 2026 (Free & Paid)',
     metaDescription: 'Best AI automation tools compared: n8n, Make, Zapier, ActivePieces reviewed. Automate workflows with AI without coding.',
     h1: '8 Best AI Automation Tools in 2026',
     intro: 'AI automation tools let you connect apps, automate repetitive tasks, and build workflows without code. Here are the best options for individuals, teams, and enterprises.',
@@ -203,7 +203,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-seo-tools',
     label: 'SEO Tools',
-    metaTitle: '8 Best AI SEO Tools in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI SEO Tools in 2026 (Free & Paid)',
     metaDescription: 'Best AI SEO tools compared: Surfer SEO, Semrush, Ahrefs, Clearscope, Frase reviewed. Rank higher with AI-powered SEO tools.',
     h1: '8 Best AI SEO Tools in 2026',
     intro: 'AI is transforming SEO — from content optimization to keyword research. These tools help you create content that ranks faster and outperforms competitors.',
@@ -228,7 +228,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-research-tools',
     label: 'Research Tools',
-    metaTitle: '8 Best AI Research Tools in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Research Tools in 2026 (Free & Paid)',
     metaDescription: 'Best AI research tools compared: Perplexity, Elicit, Consensus, Semantic Scholar reviewed. Do better research faster with AI.',
     h1: '8 Best AI Research Tools in 2026',
     intro: 'AI research tools help you find information faster, analyze academic papers, and synthesize knowledge from across the web. Here are the best options for students, researchers, and professionals.',
@@ -253,7 +253,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-agent-builders',
     label: 'Agent Builders',
-    metaTitle: '8 Best AI Agent Builders in 2026 (No-Code & Code) — Ranked',
+    metaTitle: 'Best AI Agent Builders in 2026',
     metaDescription: 'Best AI agent builder tools compared: Relevance AI, Flowise, CrewAI, LangFlow, AutoGen reviewed. Build AI agents without coding.',
     h1: '8 Best AI Agent Builders in 2026',
     intro: 'AI agents can autonomously complete complex tasks — from browsing the web to writing code to managing workflows. These tools let you build agents without deep technical expertise.',
@@ -278,7 +278,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-app-builders',
     label: 'App Builders',
-    metaTitle: '8 Best AI App Builders in 2026 (No-Code) — Ranked',
+    metaTitle: 'Best AI App Builders in 2026 (No-Code)',
     metaDescription: 'Best AI app builders compared: Bubble, Glide, Softr, Adalo, Bolt.new reviewed. Build web and mobile apps with AI in hours.',
     h1: '8 Best AI App Builders in 2026',
     intro: 'AI app builders let you create web and mobile apps without coding. Describe what you want and AI builds it. These are the best platforms in 2026.',
@@ -303,7 +303,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-productivity-tools',
     label: 'Productivity',
-    metaTitle: '8 Best AI Productivity Tools in 2026 — Work Smarter, Not Harder',
+    metaTitle: 'Best AI Productivity Tools in 2026',
     metaDescription: 'Best AI productivity tools reviewed: Notion AI, Otter.ai, Motion, Reclaim.ai compared. Save hours every week with AI-powered productivity.',
     h1: '8 Best AI Productivity Tools in 2026',
     intro: 'The right AI productivity tools can save you hours every week. From AI note-taking to intelligent scheduling, these tools automate the busywork so you can focus on what matters.',
@@ -328,7 +328,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-business-tools',
     label: 'Business',
-    metaTitle: '8 Best AI Business Tools in 2026 — Grow Your Business with AI',
+    metaTitle: 'Best AI Business Tools in 2026',
     metaDescription: 'Best AI business tools reviewed: HubSpot AI, Salesforce Einstein, Clay, Apollo.io compared. Automate sales, marketing, and operations with AI.',
     h1: '8 Best AI Business Tools in 2026',
     intro: 'AI is reshaping how businesses operate — from sales automation to customer service to financial analysis. These are the best AI tools for growing and running a business in 2026.',
@@ -353,7 +353,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-learning-tools',
     label: 'Learning',
-    metaTitle: '8 Best AI Learning Tools in 2026 — Learn Anything Faster with AI',
+    metaTitle: 'Best AI Learning Tools in 2026',
     metaDescription: 'Best AI learning tools reviewed: Khan Academy AI, Duolingo, Coursera AI, Khanmigo compared. Learn faster and smarter with AI tutors.',
     h1: '8 Best AI Learning Tools in 2026',
     intro: 'AI is transforming education — personalized tutors, adaptive learning, and instant explanations are now available to everyone. These are the best AI tools for learning anything faster.',
@@ -378,7 +378,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     slug: 'ai-design-tools',
     label: 'Design',
-    metaTitle: '8 Best AI Design Tools in 2026 (Free & Paid) — Ranked',
+    metaTitle: 'Best AI Design Tools in 2026 (Free & Paid)',
     metaDescription: 'Best AI design tools reviewed: Canva AI, Adobe Firefly, Figma AI, Looka compared. Create stunning designs with AI in minutes.',
     h1: '8 Best AI Design Tools in 2026',
     intro: 'AI design tools let anyone create professional visuals without design experience. From logos to UI design to marketing materials, here are the best AI-powered design platforms.',

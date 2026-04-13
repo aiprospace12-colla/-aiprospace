@@ -55,6 +55,7 @@ export default function Navbar() {
           {/* Right */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
             <Link href="/blog"
+              className="navbar-newsletter"
               style={{ fontSize: 14, fontWeight: 500, color: 'var(--muted)', whiteSpace: 'nowrap' }}
               onMouseOver={e => ((e.target as HTMLElement).style.color = 'var(--text)')}
               onMouseOut={e => ((e.target as HTMLElement).style.color = 'var(--muted)')}

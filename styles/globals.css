@@ -335,12 +335,27 @@ details.sidebar-expandable > summary::-webkit-details-marker { display: none; }
 .sidebar-sub-item:hover { background: var(--hover-bg); color: var(--text); }
 
 /* ─── RESPONSIVE ─── */
+html, body { overflow-x: hidden; }
+
 @media (max-width: 768px) {
   .sidebar { display: none !important; }
   .main-content { padding: 24px 16px !important; }
   .navbar-top { padding: 0 16px; }
-  .navbar-search { width: 100%; max-width: 260px; }
+  .navbar-search { width: 180px; }
   .navbar-tabs-inner { padding: 0 16px; }
 }
 
-@media (max-width: 480px) { .home-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .navbar-search { width: 140px; font-size: 12px; }
+  .navbar-newsletter { display: none !important; }
+}
+
+@media (max-width: 420px) {
+  .navbar-search { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .data-table { font-size: 12px; }
+  .data-table th, .data-table td { padding: 8px 6px; }
+}

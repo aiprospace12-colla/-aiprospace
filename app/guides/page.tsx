@@ -55,6 +55,22 @@ export default function GuidesPage() {
             </Link>
           ))}
         </div>
+
+        {/* FAQ */}
+        <div style={{ marginTop: 48 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 16 }}>Frequently Asked Questions</h2>
+          {[
+            { q: 'What AI tools do these guides cover?', a: 'Our guides cover the most popular AI tools in 2026: ChatGPT, Claude, Midjourney, n8n, Stable Diffusion, Perplexity, and more. We add new guides every month as new tools emerge.' },
+            { q: 'Are these guides free?', a: 'Yes — all guides on AIProSpace are 100% free. No email required, no paywall, no hidden upsells. We earn through ads so you never have to pay to access our content.' },
+            { q: 'How long does it take to complete a guide?', a: 'Most guides take 20–60 minutes to read through. Hands-on guides with exercises take longer depending on how much you practice. We recommend following along in real-time rather than just reading.' },
+            { q: 'Are the guides updated for 2026?', a: 'Yes — all guides are reviewed and updated quarterly. AI tools change rapidly and we make sure our instructions reflect the current interface and capabilities of each tool.' },
+          ].map(faq => (
+            <details key={faq.q} className="faq-item">
+              <summary className="faq-question">{faq.q}</summary>
+              <p className="faq-answer">{faq.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   )
