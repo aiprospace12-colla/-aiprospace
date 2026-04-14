@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { GLOSSARY } from '@/data/glossary'
 
 export const metadata: Metadata = {
-  title: 'AI Glossary — 50+ AI Terms Explained Simply',
-  description: 'Complete AI glossary with 50+ terms explained in simple language. From LLMs to RAG to neural networks — understand any AI term instantly.',
+  title: 'AI Glossary 2026 — 50+ AI Terms Explained in Plain English | AIProSpace',
+  description: 'The complete AI glossary for 2026. 50+ terms explained in plain English — LLMs, RAG, neural networks, prompt engineering, and more. No jargon, no fluff.',
   alternates: { canonical: 'https://aiprospace.com/glossary' },
-  openGraph: { title: 'AI Glossary — 50+ AI Terms Explained Simply', description: 'Complete AI glossary with 50+ terms explained in simple language.' },
+  openGraph: { title: 'AI Glossary 2026 — 50+ Terms Explained | AIProSpace', description: 'The complete AI glossary for 2026. 50+ AI terms explained in plain English. No jargon, no fluff.' },
 }
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')

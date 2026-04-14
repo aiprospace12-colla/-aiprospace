@@ -208,13 +208,9 @@ export default function BooksPage({ params }: Props) {
               </div>
 
               <div style={{ display: 'flex', gap: 10 }}>
-                <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer"
+                <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer nofollow"
                   className="btn btn-primary">
                   Buy on Amazon ↗
-                </a>
-                <a href={`/api/download/book-summary-${book.slug}`}
-                  className="btn btn-secondary">
-                  Download Free PDF
                 </a>
               </div>
             </div>

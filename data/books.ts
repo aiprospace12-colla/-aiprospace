@@ -25,7 +25,7 @@ export const BOOKS: Book[] = [
     slug: 'the-worlds-i-see',
     description: 'A memoir by the Stanford professor who co-created ImageNet and pioneered modern computer vision. Fei-Fei Li weaves her personal journey as a Chinese immigrant with the history of artificial intelligence, offering a rare inside view of how modern AI was built.',
     myTake: 'This is the most human AI book I have read. Fei-Fei Li does not write about AI as an abstract technology — she writes about it as a life\'s work. Her story of immigrating from China, working as a teenager to support her family while secretly applying to Princeton, and then building ImageNet while facing institutional skepticism is genuinely moving. The technical history is accurate and accessible, but it is the personal story that makes this essential reading. Best for anyone who wants to understand where modern AI came from and who actually built it.',
-    amazonUrl: 'https://www.amazon.com/Worlds-I-See-Curiosity-Courage/dp/1250898765',
+    amazonUrl: 'https://www.amazon.com/dp/1250897106',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1250898765.jpg',
   },
   {
@@ -39,7 +39,7 @@ export const BOOKS: Book[] = [
     slug: 'the-alignment-problem',
     description: 'An investigation into one of the most important problems in computer science: how do we build AI systems that do what we actually want? Brian Christian interviews leading researchers and explains the gap between what we build and what we intend.',
     myTake: 'Brian Christian has a gift for making hard problems feel urgent without being alarmist. The Alignment Problem covers reinforcement learning, reward hacking, interpretability, and value alignment through vivid stories and careful reporting. I came away with a much clearer sense of why alignment is hard and why researchers at OpenAI, DeepMind, and Anthropic consider it the defining challenge of our time. Best for anyone who wants to understand what AI safety actually means in technical terms.',
-    amazonUrl: 'https://www.amazon.com/Alignment-Problem-Machine-Learning-Values/dp/0393635821',
+    amazonUrl: 'https://www.amazon.com/dp/0393635821',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0393635821.jpg',
   },
   {
@@ -53,7 +53,7 @@ export const BOOKS: Book[] = [
     slug: 'ai-guide-for-thinking-humans',
     description: 'A clear-eyed assessment of AI capabilities and limitations from a leading complexity scientist. Mitchell cuts through both hype and fear with careful analysis of what AI systems can and cannot do.',
     myTake: 'Melanie Mitchell writes with the calm authority of someone who has studied intelligence her entire career. This book is the best antidote to both AI hype and AI panic. She takes each claimed breakthrough seriously, examines the evidence, and explains what it actually means. Her treatment of deep learning is honest: impressive but brittle, powerful but poorly understood. Best for readers who want a grounded, intellectually honest take on the state of AI.',
-    amazonUrl: 'https://www.amazon.com/Artificial-Intelligence-Guide-Thinking-Humans/dp/0374715246',
+    amazonUrl: 'https://www.amazon.com/dp/0374715246',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0374715246.jpg',
   },
   {
@@ -67,7 +67,7 @@ export const BOOKS: Book[] = [
     slug: 'human-compatible',
     description: 'The co-author of the definitive AI textbook argues that the standard model of AI development is fundamentally broken and proposes a new approach based on machines that are uncertain about human preferences.',
     myTake: 'Stuart Russell has been thinking about AI alignment longer than almost anyone. Human Compatible is his clearest public statement of why he believes current AI development is on the wrong track and what to do about it. His core argument — that we need to build machines that are uncertain about what humans want, rather than optimizing for fixed objectives — is simple but profound. The writing is dense but rewarding. Best for technical readers who want a serious treatment of long-term AI safety.',
-    amazonUrl: 'https://www.amazon.com/Human-Compatible-Artificial-Intelligence-Problem/dp/0525558616',
+    amazonUrl: 'https://www.amazon.com/dp/0525558616',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0525558616.jpg',
   },
   {
@@ -81,7 +81,7 @@ export const BOOKS: Book[] = [
     slug: 'life-3-0',
     description: 'A physicist\'s guide to the future of artificial intelligence, exploring scenarios for how superintelligent AI could transform society, work, and the nature of existence itself.',
     myTake: 'Max Tegmark writes with the enthusiasm of a physicist who has discovered the most interesting problem in the universe. Life 3.0 is ambitious — it covers everything from near-term automation to the far future of digital consciousness. Some scenarios feel speculative but are clearly labeled as such. The book\'s greatest strength is helping readers develop a framework for thinking about AI futures that goes beyond simple utopian or dystopian narratives. Best for readers who want to think seriously about long-term consequences.',
-    amazonUrl: 'https://www.amazon.com/Life-3-0-Being-Artificial-Intelligence/dp/1101970316',
+    amazonUrl: 'https://www.amazon.com/dp/1101970316',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1101970316.jpg',
   },
   {
@@ -95,7 +95,7 @@ export const BOOKS: Book[] = [
     slug: 'superintelligence',
     description: 'The book that launched a thousand AI safety careers. Bostrom examines the prospect of machine superintelligence and argues that managing this transition will be the most important challenge humanity has ever faced.',
     myTake: 'Superintelligence is dense and technical, but it belongs on this list because it is arguably the most influential AI book ever written. It convinced Elon Musk, Bill Gates, and Stephen Hawking to take AI risk seriously. Today, many of Bostrom\'s specific arguments have been refined or challenged, but the core concern — that very capable AI systems pursuing misspecified goals could be catastrophic — remains a live research question. Read it for historical context and intellectual groundwork, not as the final word.',
-    amazonUrl: 'https://www.amazon.com/Superintelligence-Dangers-Strategies-Nick-Bostrom/dp/0198739834',
+    amazonUrl: 'https://www.amazon.com/dp/0198739834',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0198739834.jpg',
   },
   {
@@ -109,7 +109,7 @@ export const BOOKS: Book[] = [
     slug: 'the-coming-wave',
     description: 'The co-founder of DeepMind and creator of Inflection AI argues that AI and synthetic biology represent a wave of powerful technology that governments are unprepared to manage.',
     myTake: 'Mustafa Suleyman has built some of the most powerful AI systems in existence, which makes The Coming Wave worth reading on those credentials alone. His core argument — that the containment of powerful technology is nearly impossible but absolutely necessary — is genuinely original. Unlike most AI books, this one takes seriously the political economy of AI development and why it is so hard to slow down. Best for policy-minded readers and anyone who wants to understand why AI governance is so difficult.',
-    amazonUrl: 'https://www.amazon.com/Coming-Wave-Technology-Twenty-first-Centurys/dp/0593593952',
+    amazonUrl: 'https://www.amazon.com/dp/0593593952',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0593593952.jpg',
   },
   {
@@ -123,7 +123,7 @@ export const BOOKS: Book[] = [
     slug: 'atlas-of-ai',
     description: 'A critical examination of the physical, social, and political costs of artificial intelligence, from mining the minerals for hardware to the labor behind content moderation.',
     myTake: 'Kate Crawford provides an essential corrective to the usual AI narrative. Rather than focusing on algorithms, she traces AI to its material roots: the lithium mines, the Amazon warehouses, the underpaid data labelers. This is not an anti-AI book per se — it is a demand for honest accounting. The writing is excellent and the research is meticulous. Best for readers who want to understand the full cost structure of AI systems beyond the server room.',
-    amazonUrl: 'https://www.amazon.com/Atlas-AI-Power-Politics-Planetary/dp/0300264631',
+    amazonUrl: 'https://www.amazon.com/dp/0300264631',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0300264631.jpg',
   },
   {
@@ -137,7 +137,7 @@ export const BOOKS: Book[] = [
     slug: 'prediction-machines',
     description: 'Three economists reframe AI as a technology that dramatically reduces the cost of prediction, and explain what this means for strategy, management, and the economy.',
     myTake: 'Prediction Machines is the most useful business AI book I have read. The central insight — that AI is fundamentally a prediction technology, and cheap prediction changes everything — is simple and powerful. The authors are economists, so they think carefully about incentives and tradeoffs rather than just listing applications. The strategy implications for businesses are concrete and actionable. Best for executives, managers, and entrepreneurs who want to think clearly about AI\'s business implications.',
-    amazonUrl: 'https://www.amazon.com/Prediction-Machines-Economics-Artificial-Intelligence/dp/1633695670',
+    amazonUrl: 'https://www.amazon.com/dp/1633695670',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1633695670.jpg',
   },
   {
@@ -151,7 +151,7 @@ export const BOOKS: Book[] = [
     slug: 'ai-superpowers',
     description: 'The former head of Google China argues that the AI race between the US and China will reshape the global economy, and explains why China may have structural advantages in AI deployment.',
     myTake: 'Kai-Fu Lee brings a unique perspective — he has led AI labs in both Silicon Valley and Beijing. His argument that China\'s massive data advantage and willingness to deploy AI aggressively could outweigh the US\'s research edge was controversial in 2018 and remains debated today. Regardless of whether his predictions prove correct, the framework is useful: implementation advantage vs. research advantage is a real distinction. Best for anyone thinking about AI geopolitics and competitive strategy.',
-    amazonUrl: 'https://www.amazon.com/AI-Superpowers-China-Silicon-Valley/dp/132854639X',
+    amazonUrl: 'https://www.amazon.com/dp/132854639X',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/132854639X.jpg',
   },
   {
@@ -165,7 +165,7 @@ export const BOOKS: Book[] = [
     slug: 'the-age-of-ai',
     description: 'Three distinguished thinkers examine how AI will transform human civilization, from geopolitics to philosophy, arguing we are entering a new epoch that will challenge fundamental assumptions about knowledge and reality.',
     myTake: 'An unusual collaboration that delivers genuinely original thinking. Kissinger brings geopolitical insight, Schmidt brings technical understanding from Google, and Huttenlocher brings cognitive science. The sections on AI and epistemology — how AI systems produce conclusions that humans cannot fully explain — are the most original. The geopolitical analysis is sophisticated. Not a practical guide but a serious attempt to think through civilizational consequences.',
-    amazonUrl: 'https://www.amazon.com/Age-AI-Our-Human-Future/dp/0316273805',
+    amazonUrl: 'https://www.amazon.com/dp/0316273805',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0316273805.jpg',
   },
   {
@@ -347,7 +347,7 @@ export const BOOKS: Book[] = [
     slug: 'the-precipice',
     description: 'An Oxford philosopher argues that our current era is uniquely important in human history and that existential risks — including unaligned AI — represent the most serious threat to humanity\'s long-term potential.',
     myTake: 'Toby Ord writes with moral clarity and intellectual rigor about humanity\'s highest-stakes decisions. The chapter on AI is one of the most careful assessments of existential risk from AI that I have read at this level of accessibility. Ord is not alarmist but he is serious, and his probability estimates are carefully argued. Even if you disagree with his conclusions, the framework for thinking about existential risk is valuable and well-developed.',
-    amazonUrl: 'https://www.amazon.com/Precipice-Existential-Risk-Future-Humanity/dp/0316484911',
+    amazonUrl: 'https://www.amazon.com/dp/031648492X',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0316484911.jpg',
   },
   {
@@ -361,7 +361,7 @@ export const BOOKS: Book[] = [
     slug: 'final-invention',
     description: 'A documentary filmmaker argues that artificial superintelligence will be the last invention humanity needs to make — because it will take over from there, not necessarily in our interest.',
     myTake: 'Final Invention is the most pessimistic book on this list and should be read with that in mind. Barrat interviews AI safety researchers and comes away convinced that unfriendly AI is a near-certainty. His reporting is better than his predictions. The book is most valuable as a document of what the earliest AI safety researchers were worried about before the field became mainstream. Best read alongside Human Compatible or The Alignment Problem for a more balanced perspective.',
-    amazonUrl: 'https://www.amazon.com/Our-Final-Invention-Artificial-Intelligence/dp/1250058783',
+    amazonUrl: 'https://www.amazon.com/dp/1250301159',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1250058783.jpg',
   },
   {
@@ -375,7 +375,7 @@ export const BOOKS: Book[] = [
     slug: 'machines-of-loving-grace',
     description: 'The author of The Alignment Problem returns with a comprehensive look at AI progress since 2020, examining how AI is transforming medicine, economy, and society in real time.',
     myTake: 'Brian Christian\'s follow-up to The Alignment Problem is the essential 2024 AI book. Where Alignment Problem was about what could go wrong in theory, Machines of Loving Grace is about what is happening in practice. The chapters on AI in healthcare and scientific research are genuinely exciting. The analysis of economic disruption is careful and evidence-based. Christian is the best writer currently working on AI policy questions — every page is worth reading.',
-    amazonUrl: 'https://www.amazon.com/Machines-Loving-Grace-Brian-Christian/dp/0593713680',
+    amazonUrl: 'https://www.amazon.com/dp/0593718879',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0593713680.jpg',
   },
 ]

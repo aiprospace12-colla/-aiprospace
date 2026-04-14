@@ -37,9 +37,23 @@ export default function CoursePage({ params }: Props) {
     })),
   }
 
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: cat.h1,
+    numberOfItems: cat.courses.length,
+    itemListElement: cat.courses.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.title,
+      url: c.url,
+    })),
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
       <div style={{ display: 'flex' }}>
         {/* Sidebar */}

@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { GUIDES, GUIDE_TOPICS } from '@/data/guides'
 
 export const metadata: Metadata = {
-  title: 'AI Guides — Step by Step Tutorials',
-  description: 'Master AI tools with our step by step guides. From beginners to advanced — free tutorials for ChatGPT, Claude, n8n and more.',
+  title: 'Free AI Guides & Tutorials 2026 — ChatGPT, Claude, n8n & More | AIProSpace',
+  description: 'Step-by-step AI guides for every skill level. Learn ChatGPT, Claude, Midjourney, n8n, and more — free, practical tutorials updated for 2026.',
   alternates: { canonical: 'https://aiprospace.com/guides' },
-  openGraph: { title: 'AI Guides — Step by Step Tutorials', description: 'Free step-by-step AI tutorials for every skill level.' },
+  openGraph: { title: 'Free AI Guides & Tutorials 2026 | AIProSpace', description: 'Step-by-step AI guides for ChatGPT, Claude, n8n, Midjourney and more. Free tutorials updated for 2026.' },
 }
 
 const DIFF_COLOR: Record<string, string> = {

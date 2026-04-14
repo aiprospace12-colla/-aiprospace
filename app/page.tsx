@@ -6,11 +6,12 @@ import AdBanner from '@/components/AdBanner'
 import { OrbitIcon } from '@/components/Logo'
 
 export const metadata: Metadata = {
-  title: 'AIProSpace — #1 AI Tools & Resources Hub',
-  description: 'Find the best AI tools, guides and courses — curated and reviewed by experts. 100% free, updated weekly.',
+  title: 'AIProSpace — Free AI Tools, Courses & Resources Hub 2026',
+  description: 'The best AI tools, courses, guides, and books — curated and reviewed by our team. 100% free to browse. Updated weekly.',
+  alternates: { canonical: 'https://aiprospace.com' },
   openGraph: {
-    title: 'AIProSpace — #1 AI Tools & Resources Hub',
-    description: 'Find the best AI tools, guides and courses — curated and reviewed by experts. 100% free, updated weekly.',
+    title: 'AIProSpace — Free AI Tools, Courses & Resources Hub 2026',
+    description: 'The best AI tools, courses, guides, and books — curated and reviewed by our team. 100% free to browse. Updated weekly.',
     url: 'https://aiprospace.com',
   },
 }
