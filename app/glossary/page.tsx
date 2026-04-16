@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { GLOSSARY } from '@/data/glossary'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 export const metadata: Metadata = {
   title: 'AI Glossary 2026 — 50+ AI Terms Explained in Plain English | AIProSpace',
@@ -35,6 +36,19 @@ export default function GlossaryPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Glossary</p>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>BY LETTER</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <a href="#top" className="sidebar-item">All Terms</a>
+              {LETTERS.filter(l => presentLetters.includes(l)).map(letter => (
+                <a key={letter} href={`#letter-${letter}`} className="sidebar-item">{letter}</a>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

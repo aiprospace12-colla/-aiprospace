@@ -2,103 +2,118 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function sendWelcomeEmail(email: string) {
-  const { data, error } = await resend.emails.send({
-    from: 'AIProSpace <hello@aiprospace.com>',
-    to: email,
-    subject: 'Your AI Automation Playbook is here 🚀',
-    html: `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Your AI Automation Playbook</title>
-      </head>
-      <body style="margin:0;padding:0;background:#06060f;font-family:'DM Sans',Arial,sans-serif;color:#f0f0ff;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;padding:40px 20px;">
-          <tr>
-            <td>
-              <!-- Header -->
-              <div style="text-align:center;margin-bottom:40px;">
-                <h1 style="font-size:28px;font-weight:800;margin:0;">
-                  <span style="color:#00d4ff;">AI</span><span style="color:#f0f0ff;">ProSpace</span>
-                </h1>
-              </div>
+const ADMIN_EMAIL = 'aiprospace12@gmail.com'
+const FROM = 'AIProSpace <hello@aiprospace.com>'
 
-              <!-- Main card -->
-              <div style="background:#0d0d1a;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:40px;margin-bottom:24px;">
-                <h2 style="font-size:24px;font-weight:700;margin:0 0 16px;color:#f0f0ff;">
-                  Your Playbook is Ready! 🎉
-                </h2>
-                <p style="color:#8888aa;line-height:1.8;margin:0 0 24px;">
-                  Welcome to AIProSpace! You've just unlocked <strong style="color:#f0f0ff;">The AI Automation Playbook 2025</strong> — your guide to 10 powerful AI tools and automation workflows to make money online.
-                </p>
+export async function sendWelcomeEmail(email: string, source?: string) {
+  try {
+    // 1. Welcome email to subscriber
+    await resend.emails.send({
+      from: FROM,
+      to: email,
+      subject: 'Your free resource from AIProSpace 🚀',
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;padding:40px 20px;background:#fff;">
+          <h1 style="font-size:24px;font-weight:700;margin-bottom:16px;color:#111;">
+            Welcome to AIProSpace! 🎉
+          </h1>
+          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:16px;">
+            Thank you for joining AIProSpace — your free AI tools and resources hub.
+          </p>
+          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:24px;">
+            Your free resource is ready to download. Click the button below to access it:
+          </p>
+          <a href="https://aiprospace.com/resources"
+            style="display:inline-block;background:#000;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:24px;">
+            Access Your Free Resource →
+          </a>
+          <p style="font-size:14px;color:#888;margin-top:32px;line-height:1.6;">
+            You'll also receive our weekly newsletter with the best AI tools, guides and news.<br/>
+            <a href="https://aiprospace.com/unsubscribe" style="color:#888;">Unsubscribe anytime</a>
+          </p>
+          <hr style="border:none;border-top:1px solid #eee;margin:24px 0;"/>
+          <p style="font-size:12px;color:#aaa;">
+            AIProSpace — aiprospace.com<br/>
+            The #1 Free AI Tools &amp; Resources Hub
+          </p>
+        </div>
+      `,
+    })
 
-                <a href="https://aiprospace.com/resources"
-                   style="display:inline-block;background:linear-gradient(135deg,#7b5ea7,#5a4080);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:600;margin-bottom:24px;">
-                  Download Your Playbook →
-                </a>
+    // 2. Notification to admin
+    await resend.emails.send({
+      from: FROM,
+      to: ADMIN_EMAIL,
+      subject: `🎉 New subscriber: ${email}`,
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;padding:20px;">
+          <h2>New Subscriber! 🎉</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Source:</strong> ${source || 'website'}</p>
+          <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+          <p>
+            <a href="https://supabase.com/dashboard/project/cjxywqddesdscrdzdmug/editor">
+              View all subscribers in Supabase →
+            </a>
+          </p>
+        </div>
+      `,
+    })
 
-                <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:24px 0;" />
-
-                <h3 style="font-size:16px;font-weight:600;margin:0 0 12px;color:#f0f0ff;">What's inside:</h3>
-                <ul style="color:#8888aa;line-height:2;padding-left:20px;margin:0 0 24px;">
-                  <li>10 AI tools that make real money in 2025</li>
-                  <li>Step-by-step automation workflows</li>
-                  <li>Real income strategies you can start today</li>
-                  <li>Best free vs paid AI tools breakdown</li>
-                  <li>Bonus: 5 automation templates included</li>
-                </ul>
-
-                <p style="color:#8888aa;line-height:1.8;margin:0;">
-                  Every week, you'll receive our latest AI tool reviews, automation guides, and money-making strategies directly to your inbox.
-                </p>
-              </div>
-
-              <!-- Footer -->
-              <div style="text-align:center;color:#8888aa;font-size:12px;line-height:1.8;">
-                <p style="margin:0 0 8px;">© 2025 AIProSpace. All rights reserved.</p>
-                <p style="margin:0;">
-                  <a href="https://aiprospace.com/unsubscribe" style="color:#7b5ea7;text-decoration:none;">Unsubscribe</a> ·
-                  <a href="https://aiprospace.com/privacy" style="color:#7b5ea7;text-decoration:none;">Privacy Policy</a>
-                </p>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </body>
-      </html>
-    `,
-  })
-
-  if (error) {
+    return { success: true }
+  } catch (error) {
+    console.error('sendWelcomeEmail error:', error)
     return { success: false, error }
   }
-
-  return { success: true, data }
 }
 
 export async function sendContactEmail(name: string, email: string, message: string) {
-  const { data, error } = await resend.emails.send({
-    from: 'AIProSpace Contact <hello@aiprospace.com>',
-    to: 'hello@aiprospace.com',
-    reply_to: email,
-    subject: `New Contact Form Message from ${name}`,
-    html: `
-      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p style="background:#f5f5f5;padding:16px;border-radius:8px;">${message}</p>
-      </div>
-    `,
-  })
+  try {
+    // 1. Notify admin with contact details
+    await resend.emails.send({
+      from: FROM,
+      to: ADMIN_EMAIL,
+      reply_to: email,
+      subject: `📬 New contact from ${name}`,
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;max-width:600px;padding:20px;">
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <div style="background:#f5f5f5;padding:16px;border-radius:8px;white-space:pre-wrap;color:#333;">
+            ${message}
+          </div>
+          <p style="color:#888;font-size:12px;margin-top:24px;">
+            Reply directly to this email to respond to ${name}.
+          </p>
+        </div>
+      `,
+    })
 
-  if (error) {
+    // 2. Confirmation to sender
+    await resend.emails.send({
+      from: FROM,
+      to: email,
+      subject: 'We received your message — AIProSpace',
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;max-width:600px;padding:40px 20px;background:#fff;">
+          <h2 style="font-size:22px;font-weight:700;margin-bottom:12px;">Thanks for reaching out, ${name}! 👋</h2>
+          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:16px;">
+            We received your message and will reply within 24 hours.
+          </p>
+          <p style="font-size:15px;color:#444;margin-bottom:8px;">Here's what you sent us:</p>
+          <div style="background:#f5f5f5;padding:16px;border-radius:8px;color:#444;white-space:pre-wrap;font-size:14px;">
+            ${message}
+          </div>
+          <p style="color:#aaa;font-size:12px;margin-top:32px;">AIProSpace — aiprospace.com</p>
+        </div>
+      `,
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error('sendContactEmail error:', error)
     return { success: false, error }
   }
-
-  return { success: true, data }
 }

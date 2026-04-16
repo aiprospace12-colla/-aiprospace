@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://aiprospace.com'),
   title: { default: 'AIProSpace — AI Tools, Guides & Resources', template: '%s | AIProSpace' },
   description: 'Your #1 resource hub for AI tools, guides, and strategies. Find the best AI tools reviewed and curated by experts.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon', sizes: '32x32' },
+    ],
+    apple: '/apple-icon',
+  },
   verification: {
     google: 'Yml5E2bkHbji8WfFrAgzgmltXC2zkJ2UyH70Z57xN4A',
   },
@@ -38,6 +45,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/icon" />
+        <link rel="apple-touch-icon" href="/apple-icon" />
         {adsenseId && adsenseId !== 'ca-pub-XXXXXXXXXX' && (
           <Script
             async

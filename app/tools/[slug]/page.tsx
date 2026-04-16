@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { TOOL_CATEGORIES, SIDEBAR_POPULAR, SIDEBAR_MORE } from '@/data/tools'
 import AdBanner from '@/components/AdBanner'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 type Props = { params: { slug: string } }
 
@@ -54,6 +55,30 @@ export default function ToolCategoryPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Tools</p>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>POPULAR TOOLS</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 20 }}>
+              {SIDEBAR_POPULAR.map(item => (
+                <Link key={item.slug} href={`/tools/${item.slug}`}
+                  className={`sidebar-item${params.slug === item.slug ? ' active' : ''}`}>
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>MORE TOOLS</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {SIDEBAR_MORE.map(item => (
+                <Link key={item.slug} href={`/tools/${item.slug}`}
+                  className={`sidebar-item${params.slug === item.slug ? ' active' : ''}`}>
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

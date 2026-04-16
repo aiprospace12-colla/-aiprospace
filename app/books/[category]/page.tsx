@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { BOOKS, BOOK_TOPICS } from '@/data/books'
 import AdBanner from '@/components/AdBanner'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 type Props = { params: { category: string } }
 
@@ -93,6 +94,21 @@ export default function BooksPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Books</p>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TOPIC</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {BOOK_TOPICS.map(t => (
+                <Link key={t.slug} href={`/books/${t.slug}`}
+                  className={`sidebar-item${params.category === t.slug ? ' active' : ''}`}>
+                  {t.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

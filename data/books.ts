@@ -179,7 +179,7 @@ export const BOOKS: Book[] = [
     slug: 'architects-of-intelligence',
     description: 'In-depth interviews with 23 of the most influential figures in AI research and development, including Yoshua Bengio, Geoffrey Hinton, Ray Kurzweil, and Stuart Russell.',
     myTake: 'Architects of Intelligence is invaluable as a primary source document. Martin Ford is a skilled interviewer who asks different researchers the same fundamental questions — about AGI timelines, AI consciousness, existential risk, and the future of work — allowing you to compare views directly. The disagreements between top researchers are as illuminating as the agreements. Best read alongside one or two of the other books on this list for context.',
-    amazonUrl: 'https://www.amazon.com/Architects-Intelligence-Truth-People-Building/dp/1789131391',
+    amazonUrl: 'https://www.amazon.com/dp/1789130514',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1789131391.jpg',
   },
   {
@@ -193,7 +193,7 @@ export const BOOKS: Book[] = [
     slug: 'scary-smart',
     description: 'Google X\'s former Chief Business Officer argues that superintelligent AI is inevitable and that humanity\'s best strategy is to raise AI systems as we would raise children — with care and good values.',
     myTake: 'Mo Gawdat\'s central argument is unusual but provocative: since we cannot stop advanced AI from being built, we should focus on making sure it is raised well. His background as a parent and his experience of personal tragedy give the book an emotional texture that most AI books lack. The technical content is simplified but the moral intuitions are thoughtful. Best for readers who want an emotionally engaging, accessible introduction to AI risks and responsibilities.',
-    amazonUrl: 'https://www.amazon.com/Scary-Smart-Future-Artificial-Intelligence/dp/1529068061',
+    amazonUrl: 'https://www.amazon.com/dp/1250867207',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1529068061.jpg',
   },
   {
@@ -207,7 +207,7 @@ export const BOOKS: Book[] = [
     slug: 'deep-thinking',
     description: 'The world chess champion who lost to Deep Blue reflects on what that defeat meant for human intelligence, and why he has become cautiously optimistic about AI augmenting rather than replacing human capability.',
     myTake: 'Nobody has thought longer about human versus machine intelligence than Garry Kasparov. His account of the Deep Blue matches is gripping, and his evolution from devastated loser to thoughtful AI advocate is honest and interesting. The book is strongest on the specific experience of competing against AI, and weakest on predictions about future AI development. But the central insight — that human-machine collaboration outperforms either alone — is well-argued. An unusual and worthwhile perspective.',
-    amazonUrl: 'https://www.amazon.com/Deep-Thinking-Machine-Intelligence-Creativity/dp/1610397905',
+    amazonUrl: 'https://www.amazon.com/dp/161039786X',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1610397905.jpg',
   },
   {
@@ -221,7 +221,7 @@ export const BOOKS: Book[] = [
     slug: 'a-world-without-work',
     description: 'An Oxford economist challenges the assumption that new jobs will always replace those lost to automation, and asks how society should be organized if machines can do most human labor.',
     myTake: 'Susskind is more rigorous and more pessimistic than most economists who write about automation. He takes seriously the possibility that this wave of technological unemployment could be different from previous ones, and spends most of the book asking what we should do if that is true. The policy proposals are practical and the economic reasoning is clear. Best for anyone thinking seriously about AI\'s impact on employment and economic policy.',
-    amazonUrl: 'https://www.amazon.com/World-Without-Work-Technology-Meaning/dp/1250753627',
+    amazonUrl: 'https://www.amazon.com/dp/1250762405',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1250753627.jpg',
   },
   {
@@ -235,7 +235,7 @@ export const BOOKS: Book[] = [
     slug: 'rebooting-ai',
     description: 'Two AI skeptics argue that despite remarkable recent progress, current AI systems are brittle, unreliable, and far from genuine intelligence, and that a major rethinking is required.',
     myTake: 'Gary Marcus is AI\'s most persistent skeptic, and Rebooting AI is his most systematic critique. His central argument — that deep learning produces impressive-but-brittle systems that lack genuine understanding — has proven prescient in many cases (LLM hallucination being the most obvious example). This is not an anti-AI book but a call for more rigorous standards. Best read as a counterbalance to the more enthusiastic books on this list.',
-    amazonUrl: 'https://www.amazon.com/Rebooting-AI-Building-Artificial-Intelligence/dp/1524748250',
+    amazonUrl: 'https://www.amazon.com/dp/1524748250',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1524748250.jpg',
   },
   {
@@ -249,7 +249,7 @@ export const BOOKS: Book[] = [
     slug: 'new-dark-age',
     description: 'A digital artist and writer argues that the increasing complexity of technology — AI, algorithmic systems, and networked infrastructure — is making the world less understandable, not more.',
     myTake: 'James Bridle writes like no other AI commentator. New Dark Age is more essay than argument — it ranges from drone warfare to YouTube recommendation algorithms to weather forecasting — but the central theme is consistent: complexity obscures rather than illuminates. The book is uncomfortable reading for anyone who believes technology naturally produces progress. Best for readers who want a humanistic, arts-informed perspective on algorithmic society.',
-    amazonUrl: 'https://www.amazon.com/New-Dark-Age-Technology-Future/dp/1786635577',
+    amazonUrl: 'https://www.amazon.com/dp/1786635399',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1786635577.jpg',
   },
   {
@@ -263,7 +263,7 @@ export const BOOKS: Book[] = [
     slug: 'power-and-prediction',
     description: 'The sequel to Prediction Machines examines how AI will disrupt existing power structures in industries, governments, and professions by challenging the judgment of experts.',
     myTake: 'Power and Prediction builds productively on Prediction Machines, focusing specifically on how cheap AI prediction will redistribute power between those who currently make judgments and those who do not. The healthcare chapter — examining how AI diagnosis tools will shift power from physicians — is particularly sharp. Less immediately useful than its predecessor but essential reading for anyone thinking about strategic implications of AI at an industry or institutional level.',
-    amazonUrl: 'https://www.amazon.com/Power-Prediction-Disruptive-Economics-Artificial/dp/1647824192',
+    amazonUrl: 'https://www.amazon.com/dp/1647824192',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1647824192.jpg',
   },
   {
@@ -277,7 +277,7 @@ export const BOOKS: Book[] = [
     slug: 'age-of-surveillance-capitalism',
     description: 'Harvard professor coins and explains the concept of "surveillance capitalism" — the economic system built on the extraction and commodification of human behavioral data by technology companies.',
     myTake: 'This is a long book but every page earns its place. Zuboff\'s central argument — that Google, Facebook, and their kind have created a new economic logic that treats human experience as a raw material to be processed and sold — is rigorously developed. The writing is occasionally dense but always rewarding. The chapter on behavioral modification — how surveillance data is used to shape behavior, not just predict it — is genuinely alarming. Essential reading for anyone who uses the internet.',
-    amazonUrl: 'https://www.amazon.com/Age-Surveillance-Capitalism-Future-Frontier/dp/1541758005',
+    amazonUrl: 'https://www.amazon.com/dp/1541758005',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1541758005.jpg',
   },
   {
@@ -291,7 +291,7 @@ export const BOOKS: Book[] = [
     slug: 'weapons-of-math-destruction',
     description: 'A data scientist exposes how opaque algorithms in credit scoring, hiring, policing, and education are reinforcing inequality while providing a veneer of objectivity.',
     myTake: 'Cathy O\'Neil is one of those rare writers who can make mathematical concepts visceral and urgent. Weapons of Math Destruction is essential reading because it documents harms that were happening before most people were paying attention. The case studies — a teacher fired because her students did poorly the year after she left, people denied loans based on their ZIP code — are concrete and specific. Best for understanding algorithmic bias and why it matters.',
-    amazonUrl: 'https://www.amazon.com/Weapons-Math-Destruction-Increases-Inequality/dp/0553418815',
+    amazonUrl: 'https://www.amazon.com/dp/0553418815',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0553418815.jpg',
   },
   {
@@ -305,7 +305,7 @@ export const BOOKS: Book[] = [
     slug: 'aiq',
     description: 'Two statisticians explain the mathematical concepts behind AI through historical stories, from Nightingale\'s nursing statistics to the Apollo guidance computer.',
     myTake: 'AIQ is the most accessible mathematical introduction to AI on this list. Polson and Scott explain Bayesian statistics, neural networks, and machine learning through historical narratives that make the ideas stick. The story of Florence Nightingale as a pioneering data scientist is genuinely surprising. Best for readers who want to understand the mathematical foundations of AI without suffering through a textbook. Also good for people who want to understand statistics better.',
-    amazonUrl: 'https://www.amazon.com/AIQ-Machines-Learn-Understand-Intelligence/dp/1250182158',
+    amazonUrl: 'https://www.amazon.com/dp/0358105307',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1250182158.jpg',
   },
   {
@@ -319,7 +319,7 @@ export const BOOKS: Book[] = [
     slug: 'the-master-algorithm',
     description: 'A machine learning professor explores the five major schools of machine learning and asks whether a single universal learning algorithm could exist that subsumes all others.',
     myTake: 'The Master Algorithm is the best single overview of machine learning concepts for a non-technical audience. Domingos organizes machine learning into five tribes — symbolists, connectionists, evolutionaries, Bayesians, and analogizers — and explains the core idea of each with clarity and wit. The writing is occasionally overconfident but always engaging. Still the best starting point for understanding how machine learning actually works at a conceptual level.',
-    amazonUrl: 'https://www.amazon.com/Master-Algorithm-Ultimate-Learning-Machine/dp/0465094279',
+    amazonUrl: 'https://www.amazon.com/dp/0465065708',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/0465094279.jpg',
   },
   {
@@ -333,7 +333,7 @@ export const BOOKS: Book[] = [
     slug: 'genius-makers',
     description: 'A New York Times technology reporter chronicles the race between Google and OpenAI to build artificial general intelligence, through the personalities of Geoffrey Hinton, Yann LeCun, and Demis Hassabis.',
     myTake: 'Cade Metz has covered AI for the New York Times for years and it shows — the reporting is impeccably sourced and the character portraits are sharp. Genius Makers reads like a thriller, following the intense personalities and institutional rivalries that shaped modern AI. The portrait of Geoffrey Hinton, in particular, is fascinating: a scientist who helped create something he is increasingly worried about. Essential reading for anyone interested in the sociology and history of deep learning.',
-    amazonUrl: 'https://www.amazon.com/Genius-Makers-Mavericks-Who-Brought/dp/1524742678',
+    amazonUrl: 'https://www.amazon.com/dp/1524742678',
     coverImage: 'https://images-na.ssl-images-amazon.com/images/P/1524742678.jpg',
   },
   {

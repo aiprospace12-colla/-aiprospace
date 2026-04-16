@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { RESOURCES, RESOURCE_TYPES } from '@/data/resources'
 import AdBanner from '@/components/AdBanner'
 import DownloadGate from '@/components/DownloadGate'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 export const metadata: Metadata = {
   title: 'Free AI Resources — Ebooks, Cheat Sheets & Templates | AIProSpace',
@@ -14,6 +15,20 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div style={{ display: 'flex' }}>
+      <MobileSidebar>
+        <div style={{ padding: '4px 12px 20px' }}>
+          <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Resources</p>
+          <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+          <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TYPE</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {RESOURCE_TYPES.map(type => (
+              <Link key={type} href="/resources" className={`sidebar-item${type === 'All' ? ' active' : ''}`}>
+                {type === 'All' ? 'All Resources' : type}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </MobileSidebar>
       {/* Sidebar */}
       <aside style={{
         width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GUIDES, GUIDE_TOPICS } from '@/data/guides'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 export const metadata: Metadata = {
   title: 'Free AI Guides & Tutorials 2026 — ChatGPT, Claude, n8n & More | AIProSpace',
@@ -16,25 +17,32 @@ const DIFF_COLOR: Record<string, string> = {
 }
 
 export default function GuidesPage() {
+  const sidebarContent = (
+    <div style={{ padding: '4px 12px 20px' }}>
+      <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Guides</p>
+      <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+      <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TOPIC</span>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Link href="/guides" className="sidebar-item active">All Guides</Link>
+        {GUIDE_TOPICS.map(topic => (
+          <Link key={topic.slug} href={`/guides?topic=${topic.slug}`} className="sidebar-item">
+            {topic.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+
   return (
     <div style={{ display: 'flex' }}>
+      <MobileSidebar>{sidebarContent}</MobileSidebar>
       {/* Sidebar */}
       <aside style={{
         width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
         padding: '20px 12px', position: 'sticky', top: 97,
         height: 'calc(100vh - 97px)', overflowY: 'auto', background: 'var(--sidebar-bg)',
       }} className="hidden md:block">
-        <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Guides</p>
-        <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
-        <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TOPIC</span>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Link href="/guides" className="sidebar-item active">All Guides</Link>
-          {GUIDE_TOPICS.map(topic => (
-            <Link key={topic.slug} href={`/guides?topic=${topic.slug}`} className="sidebar-item">
-              {topic.label}
-            </Link>
-          ))}
-        </div>
+        {sidebarContent}
       </aside>
 
       {/* Main */}

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { POSTS } from '@/data/blog'
 import AdBanner from '@/components/AdBanner'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 type Props = { params: { slug: string } }
 
@@ -495,6 +496,29 @@ export default function BlogPostPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <span className="sidebar-label" style={{ marginBottom: 8 }}>ON THIS PAGE</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 20 }}>
+              {content.sections.map(s => (
+                <a key={s.h2} href={`#${s.h2.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
+                  className="sidebar-item" style={{ fontSize: 13 }}>
+                  {s.h2.slice(0, 36)}{s.h2.length > 36 ? '…' : ''}
+                </a>
+              ))}
+              <a href="#faq" className="sidebar-item" style={{ fontSize: 13 }}>FAQ</a>
+            </div>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 8 }}>MORE POSTS</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {otherPosts.map(p => (
+                <Link key={p.slug} href={`/blog/${p.slug}`} className="sidebar-item" style={{ fontSize: 13 }}>
+                  {p.title.slice(0, 36)}…
+                </Link>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* TOC Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

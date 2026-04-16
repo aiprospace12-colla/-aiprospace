@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { COURSE_CATEGORIES, COURSE_TOOLS } from '@/data/courses'
 import AdBanner from '@/components/AdBanner'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 type Props = { params: { tool: string } }
 
@@ -56,6 +57,21 @@ export default function CoursePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16 }}>Courses</p>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>BY TOOL</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {COURSE_TOOLS.map(item => (
+                <Link key={item.slug} href={`/courses/${item.slug}`}
+                  className={`sidebar-item${params.tool === item.slug ? ' active' : ''}`}>
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',

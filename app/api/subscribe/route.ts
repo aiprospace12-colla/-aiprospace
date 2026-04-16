@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(result, { status: result.error === 'already_subscribed' ? 409 : 500 })
     }
 
-    // Send welcome email (non-blocking)
-    sendWelcomeEmail(email).catch(console.error)
+    // Send welcome + admin notification (non-blocking)
+    sendWelcomeEmail(email, source || 'website').catch(console.error)
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { GUIDES, type Guide } from '@/data/guides'
 import AdBanner from '@/components/AdBanner'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 type Props = { params: { slug: string } }
 
@@ -407,6 +408,31 @@ export default function GuideDetailPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <div style={{ display: 'flex' }}>
+        <MobileSidebar>
+          <div style={{ padding: '4px 12px 20px' }}>
+            <Link href="/guides" style={{ fontWeight: 700, fontSize: 14, color: 'var(--text)', padding: '0 8px', marginBottom: 16, display: 'block' }}>← All Guides</Link>
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 16 }} />
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>ON THIS PAGE</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, marginBottom: 20 }}>
+              {content.sections.map(s => (
+                <a key={s.h2} href={`#${s.h2.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                  className="sidebar-item" style={{ fontSize: 12 }}>
+                  {s.h2.slice(0, 34)}{s.h2.length > 34 ? '…' : ''}
+                </a>
+              ))}
+              <a href="#faq" className="sidebar-item" style={{ fontSize: 12 }}>FAQ</a>
+            </div>
+            <span className="sidebar-label" style={{ marginBottom: 6 }}>MORE GUIDES</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {others.slice(0, 6).map(g => (
+                <Link key={g.slug} href={`/guides/${g.slug}`}
+                  className="sidebar-item" style={{ fontSize: 12 }}>
+                  {g.title.slice(0, 30)}{g.title.length > 30 ? '…' : ''}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </MobileSidebar>
         {/* Sidebar */}
         <aside style={{
           width: 240, flexShrink: 0, borderRight: '1px solid var(--border)',
