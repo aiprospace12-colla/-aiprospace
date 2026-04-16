@@ -66,7 +66,7 @@ export default function ResourcesPage() {
               </div>
               <DownloadGate
                 resourceId={resource.id}
-                downloadUrl={resource.url}
+                filename={resource.filename}
                 label="Download Free"
               />
             </div>

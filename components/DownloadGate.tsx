@@ -4,16 +4,27 @@ import { useState } from 'react'
 
 interface Props {
   resourceId: string
-  downloadUrl: string
+  filename: string
   label?: string
 }
 
-export default function DownloadGate({ resourceId, downloadUrl, label = 'Download Free' }: Props) {
+export default function DownloadGate({ resourceId, filename, label = 'Download Free' }: Props) {
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
+
+  const downloadUrl = `/downloads/${filename}`
+
+  function triggerDownload() {
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -24,19 +35,18 @@ export default function DownloadGate({ resourceId, downloadUrl, label = 'Downloa
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: `resource-${resourceId}` }),
+        body: JSON.stringify({
+          email,
+          source: `resource-${resourceId}`,
+          downloadUrl: `https://aiprospace.com${downloadUrl}`,
+          filename,
+        }),
       })
 
       // 409 = already subscribed — still allow download
       if (res.ok || res.status === 409) {
         setDone(true)
-        // Trigger download
-        const a = document.createElement('a')
-        a.href = downloadUrl
-        a.download = ''
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
+        triggerDownload()
       } else {
         const data = await res.json()
         setError(data.error || 'Something went wrong. Please try again.')
@@ -50,15 +60,17 @@ export default function DownloadGate({ resourceId, downloadUrl, label = 'Downloa
 
   if (done) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
         <span style={{
           fontSize: 13, color: '#16a34a', fontWeight: 600,
-          background: '#dcfce7', padding: '6px 14px', borderRadius: 6,
+          background: '#dcfce7', padding: '8px 14px', borderRadius: 6,
+          lineHeight: 1.5, textAlign: 'right',
         }}>
-          ✓ Download started!
+          ✓ Check your email!<br />Your PDF is on its way.
         </span>
-        <a href={downloadUrl} style={{ fontSize: 12, color: 'var(--muted)', textDecoration: 'underline' }}>
-          Click here if it didn&apos;t start
+        <a href={downloadUrl} download={filename}
+          style={{ fontSize: 12, color: 'var(--muted)', textDecoration: 'underline' }}>
+          Click here if it didn&apos;t download
         </a>
       </div>
     )
@@ -67,10 +79,7 @@ export default function DownloadGate({ resourceId, downloadUrl, label = 'Downloa
   if (open) {
     return (
       <form onSubmit={handleSubmit}
-        style={{
-          display: 'flex', flexDirection: 'column', gap: 8,
-          minWidth: 240, flexShrink: 0,
-        }}>
+        style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 240, flexShrink: 0 }}>
         <p style={{ fontSize: 12, color: 'var(--muted)', margin: 0 }}>
           Enter your email to get free access:
         </p>

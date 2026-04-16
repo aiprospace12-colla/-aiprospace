@@ -5,8 +5,28 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const ADMIN_EMAIL = 'aiprospace12@gmail.com'
 const FROM = 'AIProSpace <hello@aiprospace.com>'
 
-export async function sendWelcomeEmail(email: string, source?: string) {
+export async function sendWelcomeEmail(email: string, source?: string, downloadUrl?: string, filename?: string) {
   try {
+    const downloadBlock = downloadUrl ? `
+          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:24px;">
+            Your free resource is ready — click below to download it directly:
+          </p>
+          <a href="${downloadUrl}"
+            style="display:inline-block;background:#000;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:16px;">
+            Download ${filename || 'Your PDF'} →
+          </a>
+          <p style="font-size:13px;color:#888;margin-bottom:24px;">
+            You can also find all free resources at
+            <a href="https://aiprospace.com/resources" style="color:#555;">aiprospace.com/resources</a>
+          </p>` : `
+          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:24px;">
+            Your free resource is ready to download. Click the button below to access it:
+          </p>
+          <a href="https://aiprospace.com/resources"
+            style="display:inline-block;background:#000;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:24px;">
+            Access Your Free Resource →
+          </a>`
+
     // 1. Welcome email to subscriber
     await resend.emails.send({
       from: FROM,
@@ -20,13 +40,7 @@ export async function sendWelcomeEmail(email: string, source?: string) {
           <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:16px;">
             Thank you for joining AIProSpace — your free AI tools and resources hub.
           </p>
-          <p style="font-size:16px;line-height:1.6;color:#444;margin-bottom:24px;">
-            Your free resource is ready to download. Click the button below to access it:
-          </p>
-          <a href="https://aiprospace.com/resources"
-            style="display:inline-block;background:#000;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:24px;">
-            Access Your Free Resource →
-          </a>
+          ${downloadBlock}
           <p style="font-size:14px;color:#888;margin-top:32px;line-height:1.6;">
             You'll also receive our weekly newsletter with the best AI tools, guides and news.<br/>
             <a href="https://aiprospace.com/unsubscribe" style="color:#888;">Unsubscribe anytime</a>

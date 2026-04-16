@@ -4,7 +4,7 @@ import { sendWelcomeEmail } from '@/lib/resend'
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, source } = await req.json()
+    const { email, source, downloadUrl, filename } = await req.json()
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Send welcome + admin notification (non-blocking)
-    sendWelcomeEmail(email, source || 'website').catch(console.error)
+    sendWelcomeEmail(email, source || 'website', downloadUrl, filename).catch(console.error)
 
     return NextResponse.json({ success: true })
   } catch (error) {
