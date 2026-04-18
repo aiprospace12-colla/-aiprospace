@@ -48,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/icon" />
         <link rel="apple-touch-icon" href="/apple-icon" />
+        <meta name="p:domain_verify" content="573fa26279cc2ec352b81fd5868379b6" />
         {adsenseId && adsenseId !== 'ca-pub-XXXXXXXXXX' && (
           <Script
             async
