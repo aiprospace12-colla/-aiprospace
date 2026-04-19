@@ -11,6 +11,16 @@ export type BlogPost = {
 
 export const POSTS: BlogPost[] = [
   {
+    slug: 'ai-blog-1776621415396',
+    title: 'AI Blog Post',
+    excerpt: 'ai tools',
+    category: 'AI Tools',
+    date: 'Apr 19, 2026',
+    readTime: '11 min read',
+    description: 'ai tools',
+    heroImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80&auto=format&fit=crop',
+  },
+  {
     slug: 'best-ai-writing-tools-2026',
     title: '10 Best AI Writing Tools in 2026 (Free & Paid)',
     excerpt: 'We tested 30+ AI writing tools so you don\'t have to. Here are the best options for bloggers, marketers, and creators.',
