@@ -11,6 +11,16 @@ export type BlogPost = {
 
 export const POSTS: BlogPost[] = [
   {
+    slug: 'chatgpt-ads-alternatives-2026',
+    title: 'ChatGPT Now Has Ads: What It Means for You and the Best Free Alternatives in 2026',
+    excerpt: 'OpenAI just launched ads inside ChatGPT. Here\'s what changed, how it affects you, and the best free AI alternatives to use instead.',
+    category: 'AI News',
+    date: 'Apr 21, 2026',
+    readTime: '7 min read',
+    description: 'ChatGPT now shows cost-per-click ads at $3–$5 per click. Learn how it affects free users and discover the best ad-free ChatGPT alternatives in 2026.',
+    heroImage: 'https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=1200&q=80&auto=format&fit=crop',
+  },
+  {
     slug: 'ai-blog-1776621415396',
     title: 'AI Blog Post',
     excerpt: 'ai tools',
