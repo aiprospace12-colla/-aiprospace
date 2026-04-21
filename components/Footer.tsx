@@ -52,6 +52,12 @@ export default function Footer() {
         <Link href="/glossary" style={{ marginRight: 16 }}>Glossary</Link>
         <Link href="/blog">Blog</Link>
       </div>
+      <div style={{ marginBottom: 16, fontSize: 12, color: 'var(--muted)' }}>
+        <Link href="/privacy-policy" style={{ marginRight: 14 }}>Privacy Policy</Link>
+        <Link href="/terms-of-service" style={{ marginRight: 14 }}>Terms of Service</Link>
+        <Link href="/disclaimer" style={{ marginRight: 14 }}>Disclaimer</Link>
+        <Link href="/cookie-policy">Cookie Policy</Link>
+      </div>
 
       <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 16 }}>
         {socials.map(s => (
