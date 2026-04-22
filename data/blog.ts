@@ -11,6 +11,16 @@ export type BlogPost = {
 
 export const POSTS: BlogPost[] = [
   {
+    slug: 'google-ai-code-2026',
+    title: 'Google Says 75% of Its Code Is Now Written by AI — What This Means for You',
+    excerpt: 'Google just revealed AI writes 75% of their code. Here is what this means for developers, businesses and anyone using AI tools today.',
+    category: 'AI News',
+    date: 'Apr 22, 2026',
+    readTime: '7 min read',
+    description: 'Google confirmed AI writes 75% of all new code at the company. Learn what this means for developers, businesses, and which AI coding tools you can use today.',
+    heroImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80&auto=format&fit=crop',
+  },
+  {
     slug: 'chatgpt-ads-alternatives-2026',
     title: 'ChatGPT Now Has Ads: What It Means for You and the Best Free Alternatives in 2026',
     excerpt: 'OpenAI just launched ads inside ChatGPT. Here\'s what changed, how it affects you, and the best free AI alternatives to use instead.',
